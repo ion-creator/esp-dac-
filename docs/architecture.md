@@ -7,11 +7,11 @@
 
 ## Goals
 
-- Deliver superior dynamics on an **8 Ω** load from a compact integrated board
+- Deliver superior stereo dynamics on **2 × 8 Ω** loads from a compact integrated board
 - Operate reliably from **12–24 V DC input**, with best-performance mode at **24 V**
 - Keep the system fully integrated: protection, power conditioning, DSP, amplification, and control on one 4-layer PCB
 - Provide a stable, low-jitter audio clock domain independent of digital switching noise
-- Support standard connectivity: microSD (SDIO), USB-C (firmware), I²C/UART/GPIO expansion
+- Support required connectivity/peripherals: microSD (SDIO), USB-C (firmware), 3 encoders with push, display, and UART TX/RX expansion
 
 ---
 
@@ -41,7 +41,9 @@
                       │          │         │     └──────┬──────────┘
                       │          │ microSD │◄─ SDIO     │ MCLK
                       │          │ USB-C   │◄─ UART/USB │
-                      │          │ 3× ENC  │◄─ GPIO     │
+                      │          │ 3× ENC+P│◄─ GPIO     │
+                      │          │ Display │◄─ SPI/I²C  │
+                      │          │ UART TX/RX ◄ UART    │
                       │          │ I²C/exp │◄─ I²C      │
                       │          └────┬────┘            │
                       │         I²S master ─────────────┘
@@ -50,15 +52,15 @@
               ┌───────▼───────────────▼──────────────────▼──┐
               │              TAS5825M                        │
               │   I²S input · DSP (EQ/limiter/SRC) · DAC   │
-              │   Class-D output stage                       │
-              └────────────────────┬─────────────────────────┘
-                                   │ Differential PWM outputs
-                          ┌────────▼─────────┐
-                          │   LC Output Filter│
-                          │   (8 Ω optimized) │
-                          └────────┬──────────┘
-                                   │
-                              8 Ω Speaker
+              │   Stereo Class-D output stage (L/R)          │
+              └───────────────┬───────────────┬──────────────┘
+                              │               │ Differential PWM outputs
+                     ┌────────▼────────┐ ┌────▼──────────────┐
+                     │ LC Output Filter │ │ LC Output Filter  │
+                     │       Left       │ │      Right        │
+                     └────────┬─────────┘ └────┬──────────────┘
+                              │                │
+                          8 Ω Speaker L     8 Ω Speaker R
 ```
 
 ---
@@ -68,15 +70,15 @@
 ### ESP32-S3 — Control, UI, Storage, Connectivity
 - **Audio transport:** Reads audio files from microSD, feeds decoded PCM to TAS5825M via I²S
 - **DSP control:** Configures TAS5825M registers over I²C (EQ, limiter, volume, mode)
-- **UI:** Reads 3 rotary encoders via GPIO; supports display if added later
+- **UI:** Reads 3 rotary encoders with push switches via GPIO and drives a display module (SPI or I²C, final pick in schematic)
 - **Storage:** microSD card accessed via SDIO 4-bit mode for sufficient throughput
 - **Firmware:** USB-C port (USB-UART bridge or native USB) for flashing and OTA updates
-- **Expansion:** I²C, UART, and spare GPIO available on a header for peripherals
+- **Expansion:** I²C, UART TX/RX, and spare GPIO available on a header for peripherals
 
 ### TAS5825M — DSP / DAC / Class-D Amplifier
 - Operates as **I²S slave** driven by the external 24.576 MHz audio clock
 - Integrated DSP handles: EQ, loudness compensation, limiter, subsonic filter, SRC
-- Class-D output stage drives the LC filter and 8 Ω load
+- Stereo class-D output stage drives independent LC filters for left and right 8 Ω loads
 - Configured via I²C from ESP32-S3 at startup and during playback
 - PVDD rail should be kept as close to 24 V as practical for full dynamic headroom
 
@@ -116,9 +118,9 @@ Covered in [`lc-filter-8ohm.md`](lc-filter-8ohm.md). Summary:
 
 ```
 ┌──────────────────────────────────────────────────────────┐
-│  [Input protection + Buck]  │  [ESP32-S3 + SDIO + USB]  │
+│  [Input protection + Buck]  │ [ESP32-S3 + SDIO + USB-C] │
 │─────────────────────────────│────────────────────────────│
-│  [TAS5825M + output filter] │  [Clock domain + encoders] │
+│ [TAS5825M + L/R output filt]│ [Clock + encoders + display]│
 └──────────────────────────────────────────────────────────┘
 ```
 
@@ -136,6 +138,7 @@ Covered in [`lc-filter-8ohm.md`](lc-filter-8ohm.md). Summary:
 6. LC filter: directly adjacent to TAS5825M OUT pins; differential layout, symmetric where possible
 7. SDIO: length-matched, differential pairs, direct path to microSD connector
 8. USB-C data lines: routed as a differential pair with appropriate impedance
+9. Keep display bus and UART TX/RX away from class-D output and buck switch node
 
 ---
 
@@ -148,7 +151,7 @@ Covered in [`lc-filter-8ohm.md`](lc-filter-8ohm.md). Summary:
 | Clock halt | TAS5825M reports clock error if MCLK/BCLK/LRCLK ratios are incorrect; verify firmware I²S settings |
 | SDIO routing | Long or poorly terminated SDIO traces cause CRC errors; minimize trace length and stubs |
 | 44.1 kHz content | System clock is optimized for 48 kHz family; 44.1 kHz requires SRC conversion (TAS5825M has on-chip SRC) |
-| EMI | Class-D output traces carry high-frequency switching current; keep LC filter local, route speaker wires after filter |
+| EMI | Class-D L/R output traces carry high-frequency switching current; keep both LC filters local, route speaker wires after filters |
 
 ---
 
@@ -161,3 +164,11 @@ Covered in [`lc-filter-8ohm.md`](lc-filter-8ohm.md). Summary:
 5. Route I²S, I²C, and SDIO with length matching and solid GND reference
 6. Verify thermal design before finalizing component placement
 7. Confirm MCLK/BCLK/LRCLK ratios in firmware before hardware tape-out
+
+---
+
+## PCB Image (Initial Placement View)
+
+An initial top-view PCB image with stereo outputs, 3 encoders with push, display, and UART TX/RX is available here:
+
+- [`pcb-topview.svg`](pcb-topview.svg)

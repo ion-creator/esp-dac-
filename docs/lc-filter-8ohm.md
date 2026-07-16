@@ -19,7 +19,7 @@ The TAS5825M class-D amplifier output is a high-frequency pulse-width modulated 
 
 ## Load Assumption
 
-This design targets a nominal **8 Ω** speaker load. This is the primary use case and the filter must be optimized for it. Significant deviation from 8 Ω (e.g., using a 4 Ω load without re-characterizing the filter) may cause:
+This design targets nominal **8 Ω per channel** in **stereo (L/R)**. The same LC strategy is applied to both channels. Significant deviation from 8 Ω (e.g., using a 4 Ω load without re-characterizing the filter) may cause:
 
 - Underdamping or overdamping of the filter response
 - Frequency response deviation in the audio band
@@ -31,7 +31,7 @@ This design targets a nominal **8 Ω** speaker load. This is the primary use cas
 
 ### Differential LC (BTL — Bridge-Tied Load)
 
-TAS5825M drives the speaker in **BTL (Bridge-Tied Load)** mode: two output pins (OUT+ and OUT–) drive the speaker differentially. Each output pin requires its own LC filter leg.
+TAS5825M drives each speaker channel in **BTL (Bridge-Tied Load)** mode: two output pins (OUT+ and OUT–) drive the speaker differentially. Each output pin requires its own LC filter leg.
 
 ```
 TAS5825M OUT+ ──[L1]──┬──── Speaker (+)
@@ -151,7 +151,7 @@ For Butterworth (maximally flat, ζ = 0.707):
 | Open circuit (no speaker) | No load damping; filter becomes resonant; TAS5825M protection should engage |
 | Capacitive / reactive speaker | Complex impedance interacts with LC filter; can cause stability issues at high frequency |
 
-**Design for 8 Ω as the primary use case.** If 4 Ω or 16 Ω use is desired, re-characterize the filter or select L/C values that provide acceptable response across the intended impedance range.
+**Design for stereo 8 Ω as the primary use case.** If 4 Ω or 16 Ω use is desired, re-characterize the filter or select L/C values that provide acceptable response across the intended impedance range.
 
 ---
 

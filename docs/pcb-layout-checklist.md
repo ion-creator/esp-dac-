@@ -59,8 +59,9 @@ Work through each section in order. Earlier sections (power, GND plane) must be 
 - [ ] Decoupling capacitors (10 µF + 100 nF per VDD pin) placed adjacent to each power pin
 - [ ] USB-C connector placed at board edge; D+/D– traces route directly to ESP32-S3 USB pins with minimal via transitions
 - [ ] microSD connector placed for short SDIO routing to ESP32-S3; mechanical slot orientation confirmed for target enclosure
-- [ ] 3× rotary encoder connectors or footprints placed according to mechanical design
-- [ ] I²C/UART/GPIO expansion header placed at a convenient board edge or mounting location
+- [ ] 3× rotary encoder + push-switch footprints/connectors placed according to mechanical design
+- [ ] Display connector/footprint (SPI or I²C) placed for front-panel routing and visibility
+- [ ] I²C/UART TX/RX/GPIO expansion header placed at a convenient board edge or mounting location
 
 ---
 

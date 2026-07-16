@@ -1,8 +1,8 @@
 # esp-dac-
 
-**Compact integrated audio platform — ESP32-S3 + TAS5825M**
+**Compact integrated stereo audio platform — ESP32-S3 + TAS5825M**
 
-A compact, 4-layer PCB audio player and amplifier designed for superior dynamics on 8 Ω loads, operating from a 12–24 V input with best-performance mode at 24 V.
+A compact, 4-layer stereo audio player and amplifier designed for superior dynamics on 8 Ω loads, operating from a 12–24 V input with best-performance mode at 24 V.
 
 ---
 
@@ -18,8 +18,10 @@ A compact, 4-layer PCB audio player and amplifier designed for superior dynamics
 | Target load | 8 Ω, superior dynamics |
 | Storage | microSD via SDIO |
 | Firmware interface | USB-C (programming / OTA update) |
-| User control | 3 rotary encoders |
-| Expansion | I²C, UART, GPIO header |
+| Audio mode | Stereo (L/R) |
+| User control | 3 rotary encoders with push switch |
+| UI display | Integrated display header/module footprint |
+| Expansion | I²C, UART TX/RX, GPIO header |
 
 ---
 
@@ -40,12 +42,14 @@ A compact, 4-layer PCB audio player and amplifier designed for superior dynamics
                       MCLK / BCLK / LRCLK ──► TAS5825M (I²S slave)
                                               (also drives ESP32-S3 I²S master)
 
-  ESP32-S3  ──── I²S ────►  TAS5825M DSP ──► Class-D output ──► [LC filter] ──► 8 Ω speaker
+  ESP32-S3  ──── I²S ────►  TAS5825M DSP ──► Class-D stereo output ──► [LC filter L/R] ──► 2× 8 Ω speakers
               ── I²C ────►  TAS5825M config
               ── SDIO ───►  microSD card
               ── USB-C ──►  programming / firmware update
-              ── GPIO ───►  3× rotary encoders
-              ── header ──► I²C / UART / GPIO expansion
+              ── GPIO ───►  3× rotary encoders + push
+              ── SPI/I²C ─►  display
+              ── UART ───►  TX/RX expansion header
+              ── header ──► I²C / GPIO expansion
 ```
 
 ### PCB Stackup (4-layer)
@@ -63,7 +67,7 @@ A compact, 4-layer PCB audio player and amplifier designed for superior dynamics
 
 | Rail | Source | Consumer |
 |------|--------|----------|
-| PVDD (~24 V) | Buck output or direct input | TAS5825M power stage |
+| PVDD (~24 V) | Buck output or direct input | TAS5825M stereo power stage |
 | 3.3 V digital | Buck → LDO or direct buck | ESP32-S3, SDIO, USB, encoders, I²C/UART |
 | VDD_CLK (low-noise) | Dedicated LDO from 3.3 V or 5 V | 24.576 MHz audio oscillator |
 
@@ -80,7 +84,7 @@ A compact, 4-layer PCB audio player and amplifier designed for superior dynamics
 
 ## Design Goals and Priorities
 
-1. **Superior dynamics on 8 Ω** — maximize instantaneous headroom, avoid unnecessary compression
+1. **Superior stereo dynamics on 8 Ω** — maximize instantaneous headroom, avoid unnecessary compression
 2. **24 V audio rail** — key enabler for ~30 W continuous / ~38 W peak on 8 Ω per TAS5825M
 3. **Clean power architecture** — separated PVDD, digital, and clock domains; local low-ESR bulk near TAS5825M
 4. **Stable audio clock** — dedicated oscillator domain, physically and electrically isolated from switching noise
@@ -98,6 +102,13 @@ A compact, 4-layer PCB audio player and amplifier designed for superior dynamics
 | [`docs/dsp-headroom.md`](docs/dsp-headroom.md) | DSP defaults, limiter/EQ guidance for maximum dynamics |
 | [`docs/lc-filter-8ohm.md`](docs/lc-filter-8ohm.md) | LC output filter design for 8 Ω speaker load |
 | [`docs/pcb-layout-checklist.md`](docs/pcb-layout-checklist.md) | 4-layer PCB layout checklist |
+| [`docs/pcb-topview.svg`](docs/pcb-topview.svg) | Initial PCB top-view image with stereo and requested peripherals |
+
+---
+
+## Initial PCB Image
+
+![Initial PCB top view](docs/pcb-topview.svg)
 
 ---
 
