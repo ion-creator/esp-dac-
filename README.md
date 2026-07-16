@@ -98,6 +98,7 @@ A compact, 4-layer stereo audio player and amplifier designed for superior dynam
 | Document | Description |
 |----------|-------------|
 | [`docs/architecture.md`](docs/architecture.md) | Full system block architecture, subsystem roles, constraints |
+| [`docs/architecture-print.svg`](docs/architecture-print.svg) | System architecture block diagram — A4 landscape, print-ready |
 | [`docs/prototype.md`](docs/prototype.md) | Prototype specification: PCB dimensions, component list, zone map, mechanical constraints, next steps |
 | [`docs/power-tree.md`](docs/power-tree.md) | Input protection chain, rail strategy, bulk/decoupling targets |
 | [`docs/dsp-headroom.md`](docs/dsp-headroom.md) | DSP defaults, limiter/EQ guidance for maximum dynamics |
