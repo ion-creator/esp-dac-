@@ -12,7 +12,7 @@ A compact, 4-layer stereo audio player and amplifier designed for superior dynam
 |------|-------|
 | MCU / control | ESP32-S3 |
 | DSP / DAC / amplifier | TAS5825M (class-D, integrated DSP) |
-| PCB | 4-layer, compact form factor |
+| PCB | 4-layer, 100 mm × 75 mm |
 | Input voltage | 12–24 V DC |
 | Best-performance mode | 24 V audio rail |
 | Target load | 8 Ω, superior dynamics |
@@ -98,21 +98,23 @@ A compact, 4-layer stereo audio player and amplifier designed for superior dynam
 | Document | Description |
 |----------|-------------|
 | [`docs/architecture.md`](docs/architecture.md) | Full system block architecture, subsystem roles, constraints |
+| [`docs/prototype.md`](docs/prototype.md) | Prototype specification: PCB dimensions, component list, zone map, mechanical constraints, next steps |
 | [`docs/power-tree.md`](docs/power-tree.md) | Input protection chain, rail strategy, bulk/decoupling targets |
 | [`docs/dsp-headroom.md`](docs/dsp-headroom.md) | DSP defaults, limiter/EQ guidance for maximum dynamics |
 | [`docs/lc-filter-8ohm.md`](docs/lc-filter-8ohm.md) | LC output filter design for 8 Ω speaker load |
+| [`docs/pcb-topview.svg`](docs/pcb-topview.svg) | PCB top-view diagram (100 mm × 75 mm, 4-layer) with zones, mounting holes, and dimension annotations |
 | [`docs/pcb-layout-checklist.md`](docs/pcb-layout-checklist.md) | 4-layer PCB layout checklist |
-| [`docs/pcb-topview.svg`](docs/pcb-topview.svg) | Initial PCB top-view image with stereo and requested peripherals |
 
 ---
 
 ## Initial PCB Image
 
-![Initial PCB top view](docs/pcb-topview.svg)
+![PCB top view — 100 mm × 75 mm](docs/pcb-topview.svg)
 
 ---
 
 ## Status
 
-Initial architecture accepted. Documentation reflects the baseline design direction.
-Hardware design, schematic, and firmware are not yet started.
+**Prototype phase.** Architecture and PCB dimensions accepted (100 mm × 75 mm, 4-layer).
+Next steps: schematic capture, BOM finalisation, PCB layout, and prototype order.
+See [`docs/prototype.md`](docs/prototype.md) for the full prototype specification and task list.
