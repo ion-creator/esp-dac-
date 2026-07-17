@@ -1,0 +1,88 @@
+(kicad_sch
+  (version 20230121)
+  (generator "eeschema")
+  (uuid "aaaaaaaa-0004-0000-0000-000000000000")
+  (paper "A3")
+  (title_block
+    (title "ESP DAC - Sheet 5: Clock + UI")
+    (date "2026-07-17")
+    (rev "0.1")
+    (company "ion-creator")
+    (comment 1 "24.576 MHz Oscillator + Low-Noise LDO + Display + 3x Encoders")
+    (comment 2 "Zone D (70-100mm W, 35-75mm H) — see prototype.md")
+    (comment 3 "Status: SKELETON — OSC1 package and display TBD")
+    (comment 4 "Refs: architecture.md, prototype.md, power-tree.md")
+  )
+  (lib_symbols
+  )
+  (hierarchical_label "+3V3"
+    (shape input)
+    (at 20 40 180)
+    (effects
+      (font
+        (size 1.27 1.27)
+      )
+      (justify right)
+    )
+    (uuid "aaaaaaaa-0004-0001-0000-000000000000")
+  )
+  (hierarchical_label "VDD_CLK"
+    (shape input)
+    (at 20 50 180)
+    (effects
+      (font
+        (size 1.27 1.27)
+      )
+      (justify right)
+    )
+    (uuid "aaaaaaaa-0004-0002-0000-000000000000")
+  )
+  (hierarchical_label "I2S_MCLK"
+    (shape output)
+    (at 230 40 0)
+    (effects
+      (font
+        (size 1.27 1.27)
+      )
+      (justify left)
+    )
+    (uuid "aaaaaaaa-0004-0003-0000-000000000000")
+  )
+  (hierarchical_label "I2C_SDA"
+    (shape bidirectional)
+    (at 230 50 0)
+    (effects
+      (font
+        (size 1.27 1.27)
+      )
+      (justify left)
+    )
+    (uuid "aaaaaaaa-0004-0004-0000-000000000000")
+  )
+  (hierarchical_label "I2C_SCL"
+    (shape input)
+    (at 230 60 0)
+    (effects
+      (font
+        (size 1.27 1.27)
+      )
+      (justify left)
+    )
+    (uuid "aaaaaaaa-0004-0005-0000-000000000000")
+  )
+  (text "CLOCK + UI SHEET — ZONE D\n\nThis sheet covers the audio clock domain and all UI elements.\nAll components are in Zone D (70–100mm W, 35–75mm H) on the PCB.\n\n─── AUDIO CLOCK — LOW-NOISE LDO (U5) ────────────────────────────\nU5 is placed on the power sheet. VDD_CLK arrives here as an input.\nAdditional filtering at the oscillator supply pin:\n  Ferrite bead FB_CLK (optional, between VDD_CLK trace and OSC1)\n  100nF MLCC at OSC1 supply pin (C_OSC1), placed ≤2mm from pin\n  1µF MLCC at OSC1 supply pin (C_OSC2), placed ≤5mm from pin\n  NOTE: if U5 placed in Zone D instead of Zone A, add it here.\n\n─── 24.576 MHz OSCILLATOR (OSC1) ─────────────────────────────────\nOSC1: TCXO or precision oscillator, 24.576 MHz, 3.3V supply\n  Frequency: 24.576 MHz (48 kHz × 512)\n  Supply: VDD_CLK (low-noise LDO output)\n  Output: LVCMOS/HCMOS, 3.3V\n  Jitter: target <100 ps RMS (low jitter type preferred for audio)\n  Package options:\n    2.0×1.6mm SMD oscillator (e.g., TXS series or equivalent)\n    2.5×2.0mm SMD oscillator\n    TBD: final part — see OPEN_DECISIONS.md\n\n  Output (I2S_MCLK) fans out to:\n    → ESP32-S3 external clock input (GPIO_I2S_MCLK) — Zone B\n    → TAS5825M MCLK input — Zone C\n  Routing: short trace, single layer if possible, L2 GND below\n  Do NOT route MCLK near: buck SW node, SDIO lines, class-D output\n  Netclass: VDD_CLK domain\n\n─── ROTARY ENCODERS (ENC1, ENC2, ENC3) ──────────────────────────\nThree identical rotary encoders with push switch\n  Type: incremental rotary encoder with built-in push switch\n  Package: through-hole or SMD — TBD\n  Supply: +3V3 via 10kΩ pull-up on each signal pin (A, B, SW)\n  Contact debounce: 100nF to GND on each signal (or firmware debounce)\n\n  ENC1: 3 signals → GPIO_ENC1_A, GPIO_ENC1_B, GPIO_ENC1_SW\n  ENC2: 3 signals → GPIO_ENC2_A, GPIO_ENC2_B, GPIO_ENC2_SW\n  ENC3: 3 signals → GPIO_ENC3_A, GPIO_ENC3_B, GPIO_ENC3_SW\n\n  GPIO assignment: TBD — see OPEN_DECISIONS.md\n  Routing: signals from Zone D to Zone B (ESP32-S3)\n    Route on L1 or L4, away from clock and audio output traces\n    Short-ish paths acceptable; signal is low-frequency GPIO\n\n─── DISPLAY CONNECTOR (J5) ──────────────────────────────────────\nConnector: 2.54mm pitch header, 4–8 pins depending on interface\nInterface options (TBD — see OPEN_DECISIONS.md):\n  OPTION A: SPI display\n    Signals: SPI_CLK, SPI_MOSI, SPI_CS_DISP, DC, RST, BL, +3V3, GND\n    SPI shared with other devices? TBD\n  OPTION B: I2C display (OLED)\n    Signals: I2C_SDA, I2C_SCL, +3V3, GND (shared I2C bus)\n    I2C address: confirm no conflict with TAS5825M\nPlacement: Zone D, accessible from front panel\nPull-ups for I2C option: already on MCU sheet (verify not doubled)\n\n─── I2C NOTES ──────────────────────────────────────────────────\nI2C bus is shared between:\n  TAS5825M (address 0x4C or 0x4D, TBD)\n  Display (if I2C type, address TBD)\nPull-up resistors (4.7kΩ to +3V3):\n  Place close to ESP32-S3 or at the midpoint of the longest bus run\n  Only ONE set of pull-ups per line across the whole bus\n  TBD: confirm placement on MCU sheet vs. amplifier sheet vs. here"
+    (at 20 20 0)
+    (effects
+      (font
+        (size 1.5 1.5)
+      )
+      (justify left top)
+    )
+    (uuid "aaaaaaaa-0004-0006-0000-000000000000")
+  )
+  (sheet_instances
+    (path "/bbbbbbbb-0004-0000-0000-000000000000"
+      (page "5")
+    )
+  )
+)

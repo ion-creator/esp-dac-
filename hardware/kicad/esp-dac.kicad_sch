@@ -1,0 +1,421 @@
+(kicad_sch
+  (version 20230121)
+  (generator "eeschema")
+  (uuid "00000000-0000-0000-0000-000000000001")
+  (paper "A3")
+  (title_block
+    (title "ESP DAC - Root Schematic")
+    (date "2026-07-17")
+    (rev "0.1")
+    (company "ion-creator")
+    (comment 1 "Compact ESP32-S3 + TAS5825M Stereo Audio Platform")
+    (comment 2 "100mm x 75mm 4-Layer PCB")
+    (comment 3 "Status: SKELETON - Schematic capture in progress")
+    (comment 4 "See SCHEMATIC_PLAN.md and OPEN_DECISIONS.md for guidance")
+  )
+  (lib_symbols
+  )
+  (text "ESP DAC - Hierarchical Schematic Overview\n\nSheet 1 (this sheet): Root / Block Overview\nSheet 2 (power.kicad_sch): Input Protection, Buck Converter, LDOs\nSheet 3 (mcu.kicad_sch): ESP32-S3, microSD/SDIO, USB-C, UART Header\nSheet 4 (amplifier.kicad_sch): TAS5825M, LC Output Filters, Speaker Connectors\nSheet 5 (clock_ui.kicad_sch): 24.576 MHz Oscillator, Low-noise LDO, Display, 3x Encoders\n\nPower Rails:\n  PVDD   - TAS5825M class-D power stage (~24 V)\n  +3V3   - ESP32-S3 and all logic (3.3 V)\n  VDD_CLK - Low-noise rail for audio clock oscillator\n  GND    - Continuous plane on L2 (no splits - inviolable)\n\nKey Signal Buses:\n  I2S_MCLK, I2S_BCLK, I2S_LRCLK, I2S_DATA - ESP32-S3 to TAS5825M\n  I2C_SDA, I2C_SCL - ESP32-S3 to TAS5825M (and display if I2C)\n  SDIO_CLK, SDIO_CMD, SDIO_D0..D3 - ESP32-S3 to microSD\n  USB_DP, USB_DM - USB-C to ESP32-S3 native USB"
+    (at 30 30 0)
+    (effects
+      (font
+        (size 1.5 1.5)
+      )
+      (justify left top)
+    )
+    (uuid "00000000-0000-0000-0001-000000000001")
+  )
+  (sheet
+    (at 20 80)
+    (size 60 45)
+    (stroke
+      (width 0)
+      (type default)
+    )
+    (fill
+      (color 255 255 204 0.1)
+    )
+    (uuid "bbbbbbbb-0001-0000-0000-000000000000")
+    (property "Sheetname" "Power"
+      (at 20 79 0)
+      (effects
+        (font
+          (size 1.5 1.5)
+        )
+        (justify left bottom)
+      )
+    )
+    (property "Sheetfile" "sheets/power.kicad_sch"
+      (at 20 125.5 0)
+      (effects
+        (font
+          (size 1.27 1.27)
+        )
+        (justify left top)
+      )
+    )
+    (pin "PVDD" output
+      (at 80 90 0)
+      (effects
+        (font
+          (size 1.27 1.27)
+        )
+        (justify left)
+      )
+      (uuid "bbbbbbbb-0001-0001-0000-000000000000")
+    )
+    (pin "+3V3" output
+      (at 80 95 0)
+      (effects
+        (font
+          (size 1.27 1.27)
+        )
+        (justify left)
+      )
+      (uuid "bbbbbbbb-0001-0002-0000-000000000000")
+    )
+    (pin "VDD_CLK" output
+      (at 80 100 0)
+      (effects
+        (font
+          (size 1.27 1.27)
+        )
+        (justify left)
+      )
+      (uuid "bbbbbbbb-0001-0003-0000-000000000000")
+    )
+    (instances
+      (project "esp-dac"
+        (path "/00000000-0000-0000-0000-000000000001"
+          (page "2")
+        )
+      )
+    )
+  )
+  (sheet
+    (at 100 80)
+    (size 60 45)
+    (stroke
+      (width 0)
+      (type default)
+    )
+    (fill
+      (color 204 229 255 0.1)
+    )
+    (uuid "bbbbbbbb-0002-0000-0000-000000000000")
+    (property "Sheetname" "MCU_USB_SD"
+      (at 100 79 0)
+      (effects
+        (font
+          (size 1.5 1.5)
+        )
+        (justify left bottom)
+      )
+    )
+    (property "Sheetfile" "sheets/mcu.kicad_sch"
+      (at 100 125.5 0)
+      (effects
+        (font
+          (size 1.27 1.27)
+        )
+        (justify left top)
+      )
+    )
+    (pin "PVDD" input
+      (at 100 88 180)
+      (effects
+        (font
+          (size 1.27 1.27)
+        )
+        (justify right)
+      )
+      (uuid "bbbbbbbb-0002-0001-0000-000000000000")
+    )
+    (pin "+3V3" input
+      (at 100 93 180)
+      (effects
+        (font
+          (size 1.27 1.27)
+        )
+        (justify right)
+      )
+      (uuid "bbbbbbbb-0002-0002-0000-000000000000")
+    )
+    (pin "I2S_MCLK" output
+      (at 160 88 0)
+      (effects
+        (font
+          (size 1.27 1.27)
+        )
+        (justify left)
+      )
+      (uuid "bbbbbbbb-0002-0003-0000-000000000000")
+    )
+    (pin "I2S_BCLK" output
+      (at 160 93 0)
+      (effects
+        (font
+          (size 1.27 1.27)
+        )
+        (justify left)
+      )
+      (uuid "bbbbbbbb-0002-0004-0000-000000000000")
+    )
+    (pin "I2S_LRCLK" output
+      (at 160 98 0)
+      (effects
+        (font
+          (size 1.27 1.27)
+        )
+        (justify left)
+      )
+      (uuid "bbbbbbbb-0002-0005-0000-000000000000")
+    )
+    (pin "I2S_DATA" output
+      (at 160 103 0)
+      (effects
+        (font
+          (size 1.27 1.27)
+        )
+        (justify left)
+      )
+      (uuid "bbbbbbbb-0002-0006-0000-000000000000")
+    )
+    (pin "I2C_SDA" bidirectional
+      (at 160 108 0)
+      (effects
+        (font
+          (size 1.27 1.27)
+        )
+        (justify left)
+      )
+      (uuid "bbbbbbbb-0002-0007-0000-000000000000")
+    )
+    (pin "I2C_SCL" output
+      (at 160 113 0)
+      (effects
+        (font
+          (size 1.27 1.27)
+        )
+        (justify left)
+      )
+      (uuid "bbbbbbbb-0002-0008-0000-000000000000")
+    )
+    (instances
+      (project "esp-dac"
+        (path "/00000000-0000-0000-0000-000000000001"
+          (page "3")
+        )
+      )
+    )
+  )
+  (sheet
+    (at 20 145)
+    (size 60 45)
+    (stroke
+      (width 0)
+      (type default)
+    )
+    (fill
+      (color 255 204 204 0.1)
+    )
+    (uuid "bbbbbbbb-0003-0000-0000-000000000000")
+    (property "Sheetname" "Amplifier"
+      (at 20 144 0)
+      (effects
+        (font
+          (size 1.5 1.5)
+        )
+        (justify left bottom)
+      )
+    )
+    (property "Sheetfile" "sheets/amplifier.kicad_sch"
+      (at 20 190.5 0)
+      (effects
+        (font
+          (size 1.27 1.27)
+        )
+        (justify left top)
+      )
+    )
+    (pin "PVDD" input
+      (at 20 153 180)
+      (effects
+        (font
+          (size 1.27 1.27)
+        )
+        (justify right)
+      )
+      (uuid "bbbbbbbb-0003-0001-0000-000000000000")
+    )
+    (pin "+3V3" input
+      (at 20 158 180)
+      (effects
+        (font
+          (size 1.27 1.27)
+        )
+        (justify right)
+      )
+      (uuid "bbbbbbbb-0003-0002-0000-000000000000")
+    )
+    (pin "I2S_MCLK" input
+      (at 20 163 180)
+      (effects
+        (font
+          (size 1.27 1.27)
+        )
+        (justify right)
+      )
+      (uuid "bbbbbbbb-0003-0003-0000-000000000000")
+    )
+    (pin "I2S_BCLK" input
+      (at 20 168 180)
+      (effects
+        (font
+          (size 1.27 1.27)
+        )
+        (justify right)
+      )
+      (uuid "bbbbbbbb-0003-0004-0000-000000000000")
+    )
+    (pin "I2S_LRCLK" input
+      (at 20 173 180)
+      (effects
+        (font
+          (size 1.27 1.27)
+        )
+        (justify right)
+      )
+      (uuid "bbbbbbbb-0003-0005-0000-000000000000")
+    )
+    (pin "I2S_DATA" input
+      (at 20 178 180)
+      (effects
+        (font
+          (size 1.27 1.27)
+        )
+        (justify right)
+      )
+      (uuid "bbbbbbbb-0003-0006-0000-000000000000")
+    )
+    (pin "I2C_SDA" bidirectional
+      (at 20 183 180)
+      (effects
+        (font
+          (size 1.27 1.27)
+        )
+        (justify right)
+      )
+      (uuid "bbbbbbbb-0003-0007-0000-000000000000")
+    )
+    (pin "I2C_SCL" input
+      (at 20 188 180)
+      (effects
+        (font
+          (size 1.27 1.27)
+        )
+        (justify right)
+      )
+      (uuid "bbbbbbbb-0003-0008-0000-000000000000")
+    )
+    (instances
+      (project "esp-dac"
+        (path "/00000000-0000-0000-0000-000000000001"
+          (page "4")
+        )
+      )
+    )
+  )
+  (sheet
+    (at 100 145)
+    (size 60 45)
+    (stroke
+      (width 0)
+      (type default)
+    )
+    (fill
+      (color 204 255 204 0.1)
+    )
+    (uuid "bbbbbbbb-0004-0000-0000-000000000000")
+    (property "Sheetname" "Clock_UI"
+      (at 100 144 0)
+      (effects
+        (font
+          (size 1.5 1.5)
+        )
+        (justify left bottom)
+      )
+    )
+    (property "Sheetfile" "sheets/clock_ui.kicad_sch"
+      (at 100 190.5 0)
+      (effects
+        (font
+          (size 1.27 1.27)
+        )
+        (justify left top)
+      )
+    )
+    (pin "+3V3" input
+      (at 100 153 180)
+      (effects
+        (font
+          (size 1.27 1.27)
+        )
+        (justify right)
+      )
+      (uuid "bbbbbbbb-0004-0001-0000-000000000000")
+    )
+    (pin "VDD_CLK" input
+      (at 100 158 180)
+      (effects
+        (font
+          (size 1.27 1.27)
+        )
+        (justify right)
+      )
+      (uuid "bbbbbbbb-0004-0002-0000-000000000000")
+    )
+    (pin "I2S_MCLK" output
+      (at 160 153 0)
+      (effects
+        (font
+          (size 1.27 1.27)
+        )
+        (justify left)
+      )
+      (uuid "bbbbbbbb-0004-0003-0000-000000000000")
+    )
+    (pin "I2C_SDA" bidirectional
+      (at 160 158 0)
+      (effects
+        (font
+          (size 1.27 1.27)
+        )
+        (justify left)
+      )
+      (uuid "bbbbbbbb-0004-0004-0000-000000000000")
+    )
+    (pin "I2C_SCL" input
+      (at 160 163 0)
+      (effects
+        (font
+          (size 1.27 1.27)
+        )
+        (justify left)
+      )
+      (uuid "bbbbbbbb-0004-0005-0000-000000000000")
+    )
+    (instances
+      (project "esp-dac"
+        (path "/00000000-0000-0000-0000-000000000001"
+          (page "5")
+        )
+      )
+    )
+  )
+  (sheet_instances
+    (path "/"
+      (page "1")
+    )
+  )
+)
