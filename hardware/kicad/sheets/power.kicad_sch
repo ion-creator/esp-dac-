@@ -1,0 +1,66 @@
+(kicad_sch
+  (version 20230121)
+  (generator "eeschema")
+  (uuid "aaaaaaaa-0001-0000-0000-000000000000")
+  (paper "A3")
+  (title_block
+    (title "ESP DAC - Sheet 2: Power")
+    (date "2026-07-17")
+    (rev "0.1")
+    (company "ion-creator")
+    (comment 1 "Input Protection + Buck Converter + LDOs")
+    (comment 2 "Zone A (0-40mm W, 0-35mm H) — see prototype.md")
+    (comment 3 "Status: SKELETON — Component selection TBD")
+    (comment 4 "Refs: power-tree.md, prototype.md")
+  )
+  (lib_symbols
+  )
+  (hierarchical_label "PVDD"
+    (shape output)
+    (at 230 50 0)
+    (effects
+      (font
+        (size 1.27 1.27)
+      )
+      (justify left)
+    )
+    (uuid "aaaaaaaa-0001-0001-0000-000000000000")
+  )
+  (hierarchical_label "+3V3"
+    (shape output)
+    (at 230 60 0)
+    (effects
+      (font
+        (size 1.27 1.27)
+      )
+      (justify left)
+    )
+    (uuid "aaaaaaaa-0001-0002-0000-000000000000")
+  )
+  (hierarchical_label "VDD_CLK"
+    (shape output)
+    (at 230 70 0)
+    (effects
+      (font
+        (size 1.27 1.27)
+      )
+      (justify left)
+    )
+    (uuid "aaaaaaaa-0001-0003-0000-000000000000")
+  )
+  (text "POWER SHEET — ZONE A\n\nThis sheet covers all power generation and protection circuitry.\nAll components are in Zone A (0–40mm W, 0–35mm H) on the PCB.\n\n─── INPUT PROTECTION CHAIN ───────────────────────────────────────\nVIN (12–24V DC input, J1 barrel jack / screw terminal, board edge)\n  → F1  : Fuse, 3A hold / 6A blow, 1206 package (TBD part number)\n  → Q1  : Reverse-polarity P-ch MOSFET, 30V/5A min, SOT-23/DPAK\n           Gate drive: resistor divider to GND\n           TBD: select part; confirm Vgs threshold vs. VIN range\n  → D1  : TVS diode, unidirectional, clamp voltage 26–28V\n           TBD: select part based on final VIN max spec\n  → L_EMI / CX1 : Common-mode choke 8–10µH/2A + X-cap 100nF\n           TBD: select ferrite bead or choke part\n  → PROTECTED_VIN node\n\n─── BUCK CONVERTER ────────────────────────────────────────────────\nU3 : Synchronous buck converter\n     Input: PROTECTED_VIN (12–26V)\n     Output A: PVDD ≈24V for TAS5825M (or pass-through at 24V input)\n     Output B: VREG_INT ≈5V intermediate rail for LDOs\n     TBD: topology choice — single dual-output or two separate bucks\n     TBD: part selection — see OPEN_DECISIONS.md\n\n     Input bypass:  100µF electrolytic + 100nF MLCC close to input pins\n     Output bypass: per datasheet; low-ESR types\n     PVDD bulk:     2–4 × 100µF low-ESR polymer + 2–4 × 10µF MLCC\n                    (PVDD bulk also placed in Zone C near TAS5825M pins)\n\n─── 3.3V DIGITAL LDO ─────────────────────────────────────────────\nU4 : LDO, 3.3V output, ≥500mA, low dropout\n     Input: VREG_INT or direct from buck\n     Output: +3V3 rail (ESP32-S3, SDIO, USB logic, encoders, I2C)\n     Bypass: 10µF bulk + 100nF at output (place close to U4)\n     TBD: part number selection\n\n─── LOW-NOISE CLOCK LDO ──────────────────────────────────────────\nU5 : Ultra-low noise LDO, 3.3V or 3.0V output (confirm per OSC1 spec)\n     Target: <20µV RMS broadband noise, PSRR >60dB @ 1kHz\n     Input: +3V3 or VREG_INT via ferrite bead\n     Output: VDD_CLK rail (24.576 MHz oscillator only)\n     Bypass: 1µF + 100nF at output (place close to OSC1)\n     TBD: part number selection — see OPEN_DECISIONS.md\n\n─── NET GROUPS / NETCLASSES ──────────────────────────────────────\n  PVDD   → netclass PVDD   (1.0mm track, 0.3mm clearance)\n  +3V3   → netclass 3V3    (0.5mm track, 0.2mm clearance)\n  VDD_CLK → netclass VDD_CLK (0.25mm track, 0.2mm clearance)\n  GND    → netclass Default (0.25mm track, poured L2)"
+    (at 20 20 0)
+    (effects
+      (font
+        (size 1.5 1.5)
+      )
+      (justify left top)
+    )
+    (uuid "aaaaaaaa-0001-0004-0000-000000000000")
+  )
+  (sheet_instances
+    (path "/bbbbbbbb-0001-0000-0000-000000000000"
+      (page "2")
+    )
+  )
+)

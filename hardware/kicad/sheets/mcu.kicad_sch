@@ -1,0 +1,121 @@
+(kicad_sch
+  (version 20230121)
+  (generator "eeschema")
+  (uuid "aaaaaaaa-0002-0000-0000-000000000000")
+  (paper "A3")
+  (title_block
+    (title "ESP DAC - Sheet 3: MCU / USB / SD")
+    (date "2026-07-17")
+    (rev "0.1")
+    (company "ion-creator")
+    (comment 1 "ESP32-S3 + microSD (SDIO) + USB-C + UART Header")
+    (comment 2 "Zone B (40-100mm W, 0-35mm H) — see prototype.md")
+    (comment 3 "Status: SKELETON — GPIO assignments TBD")
+    (comment 4 "Refs: architecture.md, prototype.md")
+  )
+  (lib_symbols
+  )
+  (hierarchical_label "PVDD"
+    (shape input)
+    (at 20 40 180)
+    (effects
+      (font
+        (size 1.27 1.27)
+      )
+      (justify right)
+    )
+    (uuid "aaaaaaaa-0002-0001-0000-000000000000")
+  )
+  (hierarchical_label "+3V3"
+    (shape input)
+    (at 20 50 180)
+    (effects
+      (font
+        (size 1.27 1.27)
+      )
+      (justify right)
+    )
+    (uuid "aaaaaaaa-0002-0002-0000-000000000000")
+  )
+  (hierarchical_label "I2S_MCLK"
+    (shape output)
+    (at 230 40 0)
+    (effects
+      (font
+        (size 1.27 1.27)
+      )
+      (justify left)
+    )
+    (uuid "aaaaaaaa-0002-0003-0000-000000000000")
+  )
+  (hierarchical_label "I2S_BCLK"
+    (shape output)
+    (at 230 50 0)
+    (effects
+      (font
+        (size 1.27 1.27)
+      )
+      (justify left)
+    )
+    (uuid "aaaaaaaa-0002-0004-0000-000000000000")
+  )
+  (hierarchical_label "I2S_LRCLK"
+    (shape output)
+    (at 230 60 0)
+    (effects
+      (font
+        (size 1.27 1.27)
+      )
+      (justify left)
+    )
+    (uuid "aaaaaaaa-0002-0005-0000-000000000000")
+  )
+  (hierarchical_label "I2S_DATA"
+    (shape output)
+    (at 230 70 0)
+    (effects
+      (font
+        (size 1.27 1.27)
+      )
+      (justify left)
+    )
+    (uuid "aaaaaaaa-0002-0006-0000-000000000000")
+  )
+  (hierarchical_label "I2C_SDA"
+    (shape bidirectional)
+    (at 230 80 0)
+    (effects
+      (font
+        (size 1.27 1.27)
+      )
+      (justify left)
+    )
+    (uuid "aaaaaaaa-0002-0007-0000-000000000000")
+  )
+  (hierarchical_label "I2C_SCL"
+    (shape output)
+    (at 230 90 0)
+    (effects
+      (font
+        (size 1.27 1.27)
+      )
+      (justify left)
+    )
+    (uuid "aaaaaaaa-0002-0008-0000-000000000000")
+  )
+  (text "MCU / USB / SD SHEET — ZONE B\n\nThis sheet covers the ESP32-S3 microcontroller and all peripherals.\nAll components are in Zone B (40–100mm W, 0–35mm H) on the PCB.\n\n─── ESP32-S3 (U1) ────────────────────────────────────────────────\nPackage options:\n  OPTION A: ESP32-S3-WROOM-1 module (22.4×18mm, castellated, LGA)\n            → preferred for RF compliance; includes antenna\n  OPTION B: ESP32-S3 bare chip (QFN-56)\n            → requires external antenna or PCB antenna + RF design\n  TBD: final package — see OPEN_DECISIONS.md\n\nAntenna keepout: 3mm copper-free zone around antenna end of module\n  (enforced in PCB as a keepout zone on all copper layers)\n\nPower supply:\n  +3V3 → VDD pins (multiple, each with 10µF + 100nF decoupling)\n  GND  → multiple GND pins to L2 plane via vias\n\nGPIO assignments (TBD — assign after final package selection):\n  I2S master output:\n    GPIO_I2S_MCLK  → I2S_MCLK  (to TAS5825M and clock sheet)\n    GPIO_I2S_BCLK  → I2S_BCLK  (to TAS5825M)\n    GPIO_I2S_LRCLK → I2S_LRCLK (to TAS5825M)\n    GPIO_I2S_DATA  → I2S_DATA  (to TAS5825M)\n  I2C master:\n    GPIO_I2C_SDA   → I2C_SDA  (to TAS5825M + optional display)\n    GPIO_I2C_SCL   → I2C_SCL  (to TAS5825M + optional display)\n  SDIO 4-bit:\n    GPIO_SDIO_CLK  → SDIO_CLK  (to J3 microSD)\n    GPIO_SDIO_CMD  → SDIO_CMD  (to J3 microSD)\n    GPIO_SDIO_D0   → SDIO_D0   (to J3 microSD)\n    GPIO_SDIO_D1   → SDIO_D1   (to J3 microSD)\n    GPIO_SDIO_D2   → SDIO_D2   (to J3 microSD)\n    GPIO_SDIO_D3   → SDIO_D3   (to J3 microSD)\n  USB native:\n    GPIO_USB_DP    → USB_DP (D+) (to J2 USB-C)\n    GPIO_USB_DM    → USB_DM (D-) (to J2 USB-C)\n  UI GPIO:\n    GPIO_ENC1_A/B/SW → Encoder 1 (Zone D)\n    GPIO_ENC2_A/B/SW → Encoder 2 (Zone D)\n    GPIO_ENC3_A/B/SW → Encoder 3 (Zone D)\n    GPIO_DISP_xxx  → Display (SPI or I2C — TBD)\n  TAS5825M control:\n    GPIO_AMP_PDN   → TAS5825M PDN (power-down, active low)\n    GPIO_AMP_FAULT → TAS5825M /FAULT (interrupt, open-drain)\n\n─── microSD (J3) ─────────────────────────────────────────────────\nConnector: Push-push microSD socket, SMD\nInterface: SDIO 4-bit mode\nPull-ups: 10kΩ on each SDIO line to +3V3 (confirm against ESP32-S3 datasheet)\nRouting: length-matched group; direct path; no stubs\nNetclass: SDIO (0.2mm track)\n\n─── USB-C (J2) ──────────────────────────────────────────────────\nConnector: USB-C receptacle, SMD, board edge (within 3mm of board edge)\nInterface: USB 2.0 FS/HS native to ESP32-S3 (or UART bridge — TBD)\nESD: Optional TVS array on D+/D- immediately after connector\nCC resistors: 5.1kΩ on CC1 and CC2 for UFP (device mode)\nVBUS sensing: resistor divider to ADC GPIO for VBUS detection\nDiff pair: USB_DP/USB_DM routed as 90Ω differential pair\nNetclass: USB_D (0.2mm track, 90Ω impedance target)\n\n─── UART HEADER (J4) ─────────────────────────────────────────────\nConnector: 2.54mm pitch, 4-pin (GND, +3V3, TX, RX)\nFunction: Debug/programming via external USB-UART adapter\nPlacement: Convenient board edge in Zone B\n\n─── I2C/GPIO EXPANSION (J6) ─────────────────────────────────────\nConnector: 2.54mm pitch, header\nSignals: I2C_SDA, I2C_SCL, +3V3, GND, spare GPIO\nTBD: final pinout and connector type"
+    (at 20 20 0)
+    (effects
+      (font
+        (size 1.5 1.5)
+      )
+      (justify left top)
+    )
+    (uuid "aaaaaaaa-0002-0009-0000-000000000000")
+  )
+  (sheet_instances
+    (path "/bbbbbbbb-0002-0000-0000-000000000000"
+      (page "3")
+    )
+  )
+)

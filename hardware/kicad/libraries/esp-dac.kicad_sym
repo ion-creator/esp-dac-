@@ -1,0 +1,184 @@
+(kicad_symbol_lib
+  (version 20230121)
+  (generator "kicad_symbol_editor")
+  (symbol "TAS5825M_PLACEHOLDER"
+    (pin_names
+      (offset 1.016)
+    )
+    (in_bom yes)
+    (on_board yes)
+    (property "Reference" "U"
+      (at 0 10 0)
+      (effects
+        (font
+          (size 1.27 1.27)
+        )
+      )
+    )
+    (property "Value" "TAS5825M"
+      (at 0 7.62 0)
+      (effects
+        (font
+          (size 1.27 1.27)
+        )
+      )
+    )
+    (property "Footprint" ""
+      (at 0 5 0)
+      (effects
+        (font
+          (size 1.27 1.27)
+        )
+        (hide yes)
+      )
+    )
+    (property "Datasheet" "https://www.ti.com/lit/ds/symlink/tas5825m.pdf"
+      (at 0 2.54 0)
+      (effects
+        (font
+          (size 1.27 1.27)
+        )
+        (hide yes)
+      )
+    )
+    (property "Description" "TAS5825M Stereo 2x25W Class-D Audio Amplifier with DSP (PLACEHOLDER - assign pins from datasheet)"
+      (at 0 0 0)
+      (effects
+        (font
+          (size 1.27 1.27)
+        )
+        (hide yes)
+      )
+    )
+    (property "MPN" "TAS5825MPWPR"
+      (at 0 -2.54 0)
+      (effects
+        (font
+          (size 1.27 1.27)
+        )
+        (hide yes)
+      )
+    )
+    (property "Manufacturer" "Texas Instruments"
+      (at 0 -5 0)
+      (effects
+        (font
+          (size 1.27 1.27)
+        )
+        (hide yes)
+      )
+    )
+    (property "Status" "TBD_NEEDS_PIN_ASSIGNMENT"
+      (at 0 -7.62 0)
+      (effects
+        (font
+          (size 1.27 1.27)
+        )
+        (hide yes)
+      )
+    )
+    (symbol "TAS5825M_PLACEHOLDER_0_1"
+      (rectangle
+        (start -7.62 7.62)
+        (end 7.62 -7.62)
+        (stroke
+          (width 0)
+          (type default)
+        )
+        (fill
+          (type background)
+        )
+      )
+      (text "TAS5825M\nPLACEHOLDER\nAssign pins from datasheet\nHTSSOP-32 or VQFN-32"
+        (at 0 0 0)
+        (effects
+          (font
+            (size 1 1)
+          )
+          (justify center)
+        )
+      )
+    )
+  )
+  (symbol "ESP32S3_MODULE_PLACEHOLDER"
+    (pin_names
+      (offset 1.016)
+    )
+    (in_bom yes)
+    (on_board yes)
+    (property "Reference" "U"
+      (at 0 10 0)
+      (effects
+        (font
+          (size 1.27 1.27)
+        )
+      )
+    )
+    (property "Value" "ESP32-S3-WROOM-1"
+      (at 0 7.62 0)
+      (effects
+        (font
+          (size 1.27 1.27)
+        )
+      )
+    )
+    (property "Footprint" ""
+      (at 0 5 0)
+      (effects
+        (font
+          (size 1.27 1.27)
+        )
+        (hide yes)
+      )
+    )
+    (property "Datasheet" "https://www.espressif.com/sites/default/files/documentation/esp32-s3-wroom-1_wroom-1u_datasheet_en.pdf"
+      (at 0 2.54 0)
+      (effects
+        (font
+          (size 1.27 1.27)
+        )
+        (hide yes)
+      )
+    )
+    (property "Description" "ESP32-S3-WROOM-1 Module (PLACEHOLDER - module vs bare chip TBD)"
+      (at 0 0 0)
+      (effects
+        (font
+          (size 1.27 1.27)
+        )
+        (hide yes)
+      )
+    )
+    (property "Status" "TBD_MODULE_OR_CHIP"
+      (at 0 -2.54 0)
+      (effects
+        (font
+          (size 1.27 1.27)
+        )
+        (hide yes)
+      )
+    )
+    (symbol "ESP32S3_MODULE_PLACEHOLDER_0_1"
+      (rectangle
+        (start -7.62 7.62)
+        (end 7.62 -7.62)
+        (stroke
+          (width 0)
+          (type default)
+        )
+        (fill
+          (type background)
+        )
+      )
+      (text "ESP32-S3\nPLACEHOLDER\nModule vs. bare chip TBD\nSee OPEN_DECISIONS.md"
+        (at 0 0 0)
+        (effects
+          (font
+            (size 1 1)
+          )
+          (justify center)
+        )
+      )
+    )
+  )
+)

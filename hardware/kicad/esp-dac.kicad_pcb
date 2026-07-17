@@ -1,0 +1,745 @@
+(kicad_pcb
+  (version 20230121)
+  (generator "pcbnew")
+  (general
+    (thickness 1.6)
+    (legacy_teardrops no)
+  )
+  (paper "A3")
+  (title_block
+    (title "ESP DAC - PCB Layout")
+    (date "2026-07-17")
+    (rev "0.1")
+    (company "ion-creator")
+    (comment 1 "100mm x 75mm 4-Layer Stereo Audio Platform")
+    (comment 2 "ESP32-S3 + TAS5825M | 12-24V DC input | 2x8Ω output")
+    (comment 3 "Status: SKELETON — Schematic netlist not yet imported")
+    (comment 4 "See PCB_CONSTRAINTS.md for full design rules")
+  )
+  (layers
+    (0 "F.Cu" signal "L1 - Top Signal + Components")
+    (1 "In1.Cu" power "L2 - Continuous GND Plane - NO SPLITS EVER")
+    (2 "In2.Cu" power "L3 - Power Distribution (PVDD + 3V3 + VDD_CLK)")
+    (31 "B.Cu" signal "L4 - Bottom Signal + Thermal Spreading")
+    (32 "B.Adhes" user "B.Adhesive")
+    (33 "F.Adhes" user "F.Adhesive")
+    (34 "B.Paste" user)
+    (35 "F.Paste" user)
+    (36 "B.SilkS" user "B.Silkscreen")
+    (37 "F.SilkS" user "F.Silkscreen")
+    (38 "B.Mask" user)
+    (39 "F.Mask" user)
+    (40 "Dwgs.User" user "User.Drawings")
+    (41 "Cmts.User" user "User.Comments")
+    (42 "Eco1.User" user "User.Eco1")
+    (43 "Eco2.User" user "User.Eco2")
+    (44 "Edge.Cuts" user)
+    (45 "Margin" user)
+    (46 "B.CrtYd" user "B.Courtyard")
+    (47 "F.CrtYd" user "F.Courtyard")
+    (48 "B.Fab" user "B.Fabrication")
+    (49 "F.Fab" user "F.Fabrication")
+    (50 "User.1" user)
+    (51 "User.2" user)
+    (52 "User.3" user)
+    (53 "User.4" user)
+    (54 "User.5" user)
+    (55 "User.6" user)
+    (56 "User.7" user)
+    (57 "User.8" user)
+    (58 "User.9" user)
+  )
+  (setup
+    (pad_to_mask_clearance 0)
+    (allow_soldermask_bridges_in_footprints no)
+    (stackup
+      (layer "F.Cu"
+        (type "copper")
+        (thickness 0.035)
+      )
+      (layer "dielectric 1"
+        (type "prepreg")
+        (color "FR4 Natural")
+        (thickness 0.38)
+        (material "FR4")
+        (epsilon_r 4.5)
+        (loss_tangent 0.02)
+      )
+      (layer "In1.Cu"
+        (type "copper")
+        (thickness 0.035)
+        (locked yes)
+      )
+      (layer "dielectric 2"
+        (type "core")
+        (color "FR4 Natural")
+        (thickness 0.71)
+        (material "FR4")
+        (epsilon_r 4.5)
+        (loss_tangent 0.02)
+      )
+      (layer "In2.Cu"
+        (type "copper")
+        (thickness 0.035)
+      )
+      (layer "dielectric 3"
+        (type "prepreg")
+        (color "FR4 Natural")
+        (thickness 0.38)
+        (material "FR4")
+        (epsilon_r 4.5)
+        (loss_tangent 0.02)
+      )
+      (layer "B.Cu"
+        (type "copper")
+        (thickness 0.035)
+      )
+      (copper_finish "ENIG")
+      (dielectric_constraints no)
+    )
+    (pcbplotparams
+      (layerselection 0x00010fc_ffffffff)
+      (plot_on_all_layers_selection 0x0000000_00000000)
+      (disableapertmacros false)
+      (usegerberextensions false)
+      (usegerberattributes true)
+      (usegerberadvancedattributes true)
+      (creategerberjobfile true)
+      (dashed_line_dash_ratio 12.000000)
+      (dashed_line_gap_ratio 3.000000)
+      (svgprecision 4)
+      (plotframeref false)
+      (viasonmask false)
+      (mode 1)
+      (useauxorigin false)
+      (hpglpennumber 1)
+      (hpglpenspeed 20)
+      (hpglpendiameter 15.000000)
+      (pdf_front_fp_property_popups true)
+      (pdf_back_fp_property_popups true)
+      (dxfpolygonmode true)
+      (dxfimperialunits true)
+      (dxfusepcbnewfont true)
+      (psnegative false)
+      (psa4output false)
+      (plotreference true)
+      (plotvalue true)
+      (plotfptext true)
+      (plotinvisibletext false)
+      (sketchpadsonfab false)
+      (subtractmaskfromsilk false)
+      (outputformat 1)
+      (mirror false)
+      (drillshape 1)
+      (scaleselection 1)
+      (outputdirectory "gerbers/")
+    )
+  )
+  (net 0 "")
+  (net 1 "GND")
+  (net 2 "PVDD")
+  (net 3 "+3V3")
+  (net 4 "VDD_CLK")
+  (net 5 "PROTECTED_VIN")
+  (net 6 "VIN")
+  (net 7 "I2S_MCLK")
+  (net 8 "I2S_BCLK")
+  (net 9 "I2S_LRCLK")
+  (net 10 "I2S_DATA")
+  (net 11 "I2C_SDA")
+  (net 12 "I2C_SCL")
+  (net 13 "SDIO_CLK")
+  (net 14 "SDIO_CMD")
+  (net 15 "SDIO_D0")
+  (net 16 "SDIO_D1")
+  (net 17 "SDIO_D2")
+  (net 18 "SDIO_D3")
+  (net 19 "USB_DP")
+  (net 20 "USB_DM")
+  (net 21 "SPK_L_P")
+  (net 22 "SPK_L_N")
+  (net 23 "SPK_R_P")
+  (net 24 "SPK_R_N")
+
+  (footprint "MountingHole:MountingHole_3.2mm_M3_Pad"
+    (layer "F.Cu")
+    (uuid "cccccccc-0001-0000-0000-000000000000")
+    (at 3 3)
+    (descr "M3 Mounting Hole 3.2mm drill, 6mm keepout radius, GND connected")
+    (property "Reference" "MH1"
+      (at 0 -5 0)
+      (layer "F.SilkS")
+      (uuid "cccccccc-0001-0001-0000-000000000000")
+      (effects
+        (font
+          (size 1 1)
+          (thickness 0.15)
+        )
+      )
+    )
+    (property "Value" "MountingHole_3.2mm_M3"
+      (at 0 5 0)
+      (layer "F.Fab")
+      (uuid "cccccccc-0001-0002-0000-000000000000")
+      (effects
+        (font
+          (size 1 1)
+          (thickness 0.15)
+        )
+      )
+    )
+    (pad "1" thru_hole circle
+      (at 0 0)
+      (size 6 6)
+      (drill 3.2)
+      (layers "*.Cu" "*.Mask")
+      (net 1 "GND")
+      (uuid "cccccccc-0001-0003-0000-000000000000")
+    )
+  )
+
+  (footprint "MountingHole:MountingHole_3.2mm_M3_Pad"
+    (layer "F.Cu")
+    (uuid "cccccccc-0002-0000-0000-000000000000")
+    (at 97 3)
+    (descr "M3 Mounting Hole 3.2mm drill, 6mm keepout radius, GND connected")
+    (property "Reference" "MH2"
+      (at 0 -5 0)
+      (layer "F.SilkS")
+      (uuid "cccccccc-0002-0001-0000-000000000000")
+      (effects
+        (font
+          (size 1 1)
+          (thickness 0.15)
+        )
+      )
+    )
+    (property "Value" "MountingHole_3.2mm_M3"
+      (at 0 5 0)
+      (layer "F.Fab")
+      (uuid "cccccccc-0002-0002-0000-000000000000")
+      (effects
+        (font
+          (size 1 1)
+          (thickness 0.15)
+        )
+      )
+    )
+    (pad "1" thru_hole circle
+      (at 0 0)
+      (size 6 6)
+      (drill 3.2)
+      (layers "*.Cu" "*.Mask")
+      (net 1 "GND")
+      (uuid "cccccccc-0002-0003-0000-000000000000")
+    )
+  )
+
+  (footprint "MountingHole:MountingHole_3.2mm_M3_Pad"
+    (layer "F.Cu")
+    (uuid "cccccccc-0003-0000-0000-000000000000")
+    (at 3 72)
+    (descr "M3 Mounting Hole 3.2mm drill, 6mm keepout radius, GND connected")
+    (property "Reference" "MH3"
+      (at 0 -5 0)
+      (layer "F.SilkS")
+      (uuid "cccccccc-0003-0001-0000-000000000000")
+      (effects
+        (font
+          (size 1 1)
+          (thickness 0.15)
+        )
+      )
+    )
+    (property "Value" "MountingHole_3.2mm_M3"
+      (at 0 5 0)
+      (layer "F.Fab")
+      (uuid "cccccccc-0003-0002-0000-000000000000")
+      (effects
+        (font
+          (size 1 1)
+          (thickness 0.15)
+        )
+      )
+    )
+    (pad "1" thru_hole circle
+      (at 0 0)
+      (size 6 6)
+      (drill 3.2)
+      (layers "*.Cu" "*.Mask")
+      (net 1 "GND")
+      (uuid "cccccccc-0003-0003-0000-000000000000")
+    )
+  )
+
+  (footprint "MountingHole:MountingHole_3.2mm_M3_Pad"
+    (layer "F.Cu")
+    (uuid "cccccccc-0004-0000-0000-000000000000")
+    (at 97 72)
+    (descr "M3 Mounting Hole 3.2mm drill, 6mm keepout radius, GND connected")
+    (property "Reference" "MH4"
+      (at 0 -5 0)
+      (layer "F.SilkS")
+      (uuid "cccccccc-0004-0001-0000-000000000000")
+      (effects
+        (font
+          (size 1 1)
+          (thickness 0.15)
+        )
+      )
+    )
+    (property "Value" "MountingHole_3.2mm_M3"
+      (at 0 5 0)
+      (layer "F.Fab")
+      (uuid "cccccccc-0004-0002-0000-000000000000")
+      (effects
+        (font
+          (size 1 1)
+          (thickness 0.15)
+        )
+      )
+    )
+    (pad "1" thru_hole circle
+      (at 0 0)
+      (size 6 6)
+      (drill 3.2)
+      (layers "*.Cu" "*.Mask")
+      (net 1 "GND")
+      (uuid "cccccccc-0004-0003-0000-000000000000")
+    )
+  )
+
+  (gr_line
+    (start 0 0)
+    (end 100 0)
+    (stroke
+      (width 0.05)
+      (type default)
+    )
+    (layer "Edge.Cuts")
+    (uuid "dddddddd-0001-0000-0000-000000000000")
+  )
+  (gr_line
+    (start 100 0)
+    (end 100 75)
+    (stroke
+      (width 0.05)
+      (type default)
+    )
+    (layer "Edge.Cuts")
+    (uuid "dddddddd-0002-0000-0000-000000000000")
+  )
+  (gr_line
+    (start 100 75)
+    (end 0 75)
+    (stroke
+      (width 0.05)
+      (type default)
+    )
+    (layer "Edge.Cuts")
+    (uuid "dddddddd-0003-0000-0000-000000000000")
+  )
+  (gr_line
+    (start 0 75)
+    (end 0 0)
+    (stroke
+      (width 0.05)
+      (type default)
+    )
+    (layer "Edge.Cuts")
+    (uuid "dddddddd-0004-0000-0000-000000000000")
+  )
+
+  (gr_line
+    (start 0 35)
+    (end 100 35)
+    (stroke
+      (width 0.1)
+      (type dash)
+    )
+    (layer "Dwgs.User")
+    (uuid "eeeeeeee-0001-0000-0000-000000000000")
+  )
+  (gr_line
+    (start 40 0)
+    (end 40 35)
+    (stroke
+      (width 0.1)
+      (type dash)
+    )
+    (layer "Dwgs.User")
+    (uuid "eeeeeeee-0002-0000-0000-000000000000")
+  )
+  (gr_line
+    (start 70 35)
+    (end 70 75)
+    (stroke
+      (width 0.1)
+      (type dash)
+    )
+    (layer "Dwgs.User")
+    (uuid "eeeeeeee-0003-0000-0000-000000000000")
+  )
+
+  (gr_text "ZONE A\nInput Protection\n+ Buck Converter\n(0-40mm W, 0-35mm H)"
+    (at 20 17.5 0)
+    (layer "Dwgs.User")
+    (uuid "eeeeeeee-0010-0000-0000-000000000000")
+    (effects
+      (font
+        (size 2 2)
+        (thickness 0.25)
+      )
+      (justify center)
+    )
+  )
+  (gr_text "ZONE B\nESP32-S3 + microSD\n+ USB-C + UART\n(40-100mm W, 0-35mm H)"
+    (at 70 17.5 0)
+    (layer "Dwgs.User")
+    (uuid "eeeeeeee-0011-0000-0000-000000000000")
+    (effects
+      (font
+        (size 2 2)
+        (thickness 0.25)
+      )
+      (justify center)
+    )
+  )
+  (gr_text "ZONE C\nTAS5825M + LC Filters\n+ Speaker Connectors\n(0-70mm W, 35-75mm H)"
+    (at 35 55 0)
+    (layer "Dwgs.User")
+    (uuid "eeeeeeee-0012-0000-0000-000000000000")
+    (effects
+      (font
+        (size 2 2)
+        (thickness 0.25)
+      )
+      (justify center)
+    )
+  )
+  (gr_text "ZONE D\nDisplay + Encoders\n+ OSC + LDO_CLK\n(70-100mm W, 35-75mm H)"
+    (at 85 55 0)
+    (layer "Dwgs.User")
+    (uuid "eeeeeeee-0013-0000-0000-000000000000")
+    (effects
+      (font
+        (size 2 2)
+        (thickness 0.25)
+      )
+      (justify center)
+    )
+  )
+
+  (gr_text "MH1\n(3,3)\nGND\n3.2mm drill\n6mm keepout"
+    (at 3 8 0)
+    (layer "Cmts.User")
+    (uuid "eeeeeeee-0020-0000-0000-000000000000")
+    (effects
+      (font
+        (size 0.8 0.8)
+        (thickness 0.1)
+      )
+      (justify center)
+    )
+  )
+  (gr_text "MH2\n(97,3)\nGND\n3.2mm drill\n6mm keepout"
+    (at 97 8 0)
+    (layer "Cmts.User")
+    (uuid "eeeeeeee-0021-0000-0000-000000000000")
+    (effects
+      (font
+        (size 0.8 0.8)
+        (thickness 0.1)
+      )
+      (justify center)
+    )
+  )
+  (gr_text "MH3\n(3,72)\nGND\n3.2mm drill\n6mm keepout"
+    (at 3 67 0)
+    (layer "Cmts.User")
+    (uuid "eeeeeeee-0022-0000-0000-000000000000")
+    (effects
+      (font
+        (size 0.8 0.8)
+        (thickness 0.1)
+      )
+      (justify center)
+    )
+  )
+  (gr_text "MH4\n(97,72)\nGND\n3.2mm drill\n6mm keepout"
+    (at 97 67 0)
+    (layer "Cmts.User")
+    (uuid "eeeeeeee-0023-0000-0000-000000000000")
+    (effects
+      (font
+        (size 0.8 0.8)
+        (thickness 0.1)
+      )
+      (justify center)
+    )
+  )
+
+  (gr_text "L1=F.Cu: Components + critical signals\nL2=In1.Cu: CONTINUOUS GND — NO SPLITS\nL3=In2.Cu: PVDD pour + 3V3 pour + VDD_CLK\nL4=B.Cu: Signal overflow + thermal spreading"
+    (at 50 -8 0)
+    (layer "Cmts.User")
+    (uuid "eeeeeeee-0030-0000-0000-000000000000")
+    (effects
+      (font
+        (size 1 1)
+        (thickness 0.15)
+      )
+      (justify center)
+    )
+  )
+
+  (zone
+    (net 1)
+    (net_name "GND")
+    (layer "In1.Cu")
+    (uuid "ffffffff-0001-0000-0000-000000000000")
+    (name "GND_PLANE_L2")
+    (hatch edge 0.508)
+    (connect_pads
+      (clearance 0.1)
+    )
+    (min_thickness 0.25)
+    (fill
+      (yes)
+      (thermal_gap 0.3)
+      (thermal_bridge_width 0.3)
+    )
+    (polygon
+      (pts
+        (xy 0.3 0.3)
+        (xy 99.7 0.3)
+        (xy 99.7 74.7)
+        (xy 0.3 74.7)
+      )
+    )
+  )
+
+  (zone
+    (net 2)
+    (net_name "PVDD")
+    (layer "In2.Cu")
+    (uuid "ffffffff-0002-0000-0000-000000000000")
+    (name "PVDD_POUR_L3_ZONE_C")
+    (hatch edge 0.508)
+    (connect_pads
+      (clearance 0.3)
+    )
+    (min_thickness 0.25)
+    (fill
+      (yes)
+      (thermal_gap 0.3)
+      (thermal_bridge_width 0.5)
+    )
+    (polygon
+      (pts
+        (xy 0.3 35)
+        (xy 70 35)
+        (xy 70 74.7)
+        (xy 0.3 74.7)
+      )
+    )
+  )
+
+  (zone
+    (net 3)
+    (net_name "+3V3")
+    (layer "In2.Cu")
+    (uuid "ffffffff-0003-0000-0000-000000000000")
+    (name "3V3_POUR_L3")
+    (hatch edge 0.508)
+    (connect_pads
+      (clearance 0.2)
+    )
+    (min_thickness 0.25)
+    (fill
+      (yes)
+      (thermal_gap 0.3)
+      (thermal_bridge_width 0.3)
+    )
+    (polygon
+      (pts
+        (xy 40 0.3)
+        (xy 99.7 0.3)
+        (xy 99.7 34.7)
+        (xy 40 34.7)
+      )
+    )
+  )
+
+  (rule_area
+    (layer "F.Cu")
+    (uuid "88888888-0001-0000-0000-000000000000")
+    (name "ESP32_ANTENNA_KEEPOUT")
+    (hatch edge 0.508)
+    (connect_pads
+      (clearance 0)
+    )
+    (min_thickness 0.25)
+    (keepout
+      (tracks not_allowed)
+      (vias not_allowed)
+      (pads not_allowed)
+      (copperpour not_allowed)
+      (footprints not_allowed)
+    )
+    (polygon
+      (pts
+        (xy 93 0)
+        (xy 100 0)
+        (xy 100 15)
+        (xy 93 15)
+      )
+    )
+  )
+
+  (rule_area
+    (layer "In1.Cu")
+    (uuid "88888888-0002-0000-0000-000000000000")
+    (name "ESP32_ANTENNA_KEEPOUT_L2")
+    (hatch edge 0.508)
+    (connect_pads
+      (clearance 0)
+    )
+    (min_thickness 0.25)
+    (keepout
+      (tracks not_allowed)
+      (vias not_allowed)
+      (pads not_allowed)
+      (copperpour not_allowed)
+      (footprints not_allowed)
+    )
+    (polygon
+      (pts
+        (xy 93 0)
+        (xy 100 0)
+        (xy 100 15)
+        (xy 93 15)
+      )
+    )
+  )
+
+  (rule_area
+    (layer "F.Cu")
+    (uuid "88888888-0003-0000-0000-000000000000")
+    (name "MH1_KEEPOUT_6mm")
+    (hatch edge 0.508)
+    (connect_pads
+      (clearance 0)
+    )
+    (min_thickness 0.25)
+    (keepout
+      (tracks not_allowed)
+      (vias not_allowed)
+      (pads not_allowed)
+      (copperpour not_allowed)
+      (footprints not_allowed)
+    )
+    (polygon
+      (pts
+        (xy 9 3)
+        (xy 7.24 7.24)
+        (xy 3 9)
+        (xy -1.24 7.24)
+        (xy -3 3)
+        (xy -1.24 -1.24)
+        (xy 3 -3)
+        (xy 7.24 -1.24)
+      )
+    )
+  )
+
+  (rule_area
+    (layer "F.Cu")
+    (uuid "88888888-0004-0000-0000-000000000000")
+    (name "MH2_KEEPOUT_6mm")
+    (hatch edge 0.508)
+    (connect_pads
+      (clearance 0)
+    )
+    (min_thickness 0.25)
+    (keepout
+      (tracks not_allowed)
+      (vias not_allowed)
+      (pads not_allowed)
+      (copperpour not_allowed)
+      (footprints not_allowed)
+    )
+    (polygon
+      (pts
+        (xy 103 3)
+        (xy 101.24 7.24)
+        (xy 97 9)
+        (xy 92.76 7.24)
+        (xy 91 3)
+        (xy 92.76 -1.24)
+        (xy 97 -3)
+        (xy 101.24 -1.24)
+      )
+    )
+  )
+
+  (rule_area
+    (layer "F.Cu")
+    (uuid "88888888-0005-0000-0000-000000000000")
+    (name "MH3_KEEPOUT_6mm")
+    (hatch edge 0.508)
+    (connect_pads
+      (clearance 0)
+    )
+    (min_thickness 0.25)
+    (keepout
+      (tracks not_allowed)
+      (vias not_allowed)
+      (pads not_allowed)
+      (copperpour not_allowed)
+      (footprints not_allowed)
+    )
+    (polygon
+      (pts
+        (xy 9 72)
+        (xy 7.24 76.24)
+        (xy 3 78)
+        (xy -1.24 76.24)
+        (xy -3 72)
+        (xy -1.24 67.76)
+        (xy 3 66)
+        (xy 7.24 67.76)
+      )
+    )
+  )
+
+  (rule_area
+    (layer "F.Cu")
+    (uuid "88888888-0006-0000-0000-000000000000")
+    (name "MH4_KEEPOUT_6mm")
+    (hatch edge 0.508)
+    (connect_pads
+      (clearance 0)
+    )
+    (min_thickness 0.25)
+    (keepout
+      (tracks not_allowed)
+      (vias not_allowed)
+      (pads not_allowed)
+      (copperpour not_allowed)
+      (footprints not_allowed)
+    )
+    (polygon
+      (pts
+        (xy 103 72)
+        (xy 101.24 76.24)
+        (xy 97 78)
+        (xy 92.76 76.24)
+        (xy 91 72)
+        (xy 92.76 67.76)
+        (xy 97 66)
+        (xy 101.24 67.76)
+      )
+    )
+  )
+
+)

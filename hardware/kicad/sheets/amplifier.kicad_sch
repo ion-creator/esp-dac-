@@ -1,0 +1,121 @@
+(kicad_sch
+  (version 20230121)
+  (generator "eeschema")
+  (uuid "aaaaaaaa-0003-0000-0000-000000000000")
+  (paper "A3")
+  (title_block
+    (title "ESP DAC - Sheet 4: Amplifier")
+    (date "2026-07-17")
+    (rev "0.1")
+    (company "ion-creator")
+    (comment 1 "TAS5825M + Stereo LC Output Filters + Speaker Connectors")
+    (comment 2 "Zone C (0-70mm W, 35-75mm H) — see prototype.md")
+    (comment 3 "Status: SKELETON — LC values and package TBD")
+    (comment 4 "Refs: lc-filter-8ohm.md, dsp-headroom.md, architecture.md")
+  )
+  (lib_symbols
+  )
+  (hierarchical_label "PVDD"
+    (shape input)
+    (at 20 40 180)
+    (effects
+      (font
+        (size 1.27 1.27)
+      )
+      (justify right)
+    )
+    (uuid "aaaaaaaa-0003-0001-0000-000000000000")
+  )
+  (hierarchical_label "+3V3"
+    (shape input)
+    (at 20 50 180)
+    (effects
+      (font
+        (size 1.27 1.27)
+      )
+      (justify right)
+    )
+    (uuid "aaaaaaaa-0003-0002-0000-000000000000")
+  )
+  (hierarchical_label "I2S_MCLK"
+    (shape input)
+    (at 20 60 180)
+    (effects
+      (font
+        (size 1.27 1.27)
+      )
+      (justify right)
+    )
+    (uuid "aaaaaaaa-0003-0003-0000-000000000000")
+  )
+  (hierarchical_label "I2S_BCLK"
+    (shape input)
+    (at 20 70 180)
+    (effects
+      (font
+        (size 1.27 1.27)
+      )
+      (justify right)
+    )
+    (uuid "aaaaaaaa-0003-0004-0000-000000000000")
+  )
+  (hierarchical_label "I2S_LRCLK"
+    (shape input)
+    (at 20 80 180)
+    (effects
+      (font
+        (size 1.27 1.27)
+      )
+      (justify right)
+    )
+    (uuid "aaaaaaaa-0003-0005-0000-000000000000")
+  )
+  (hierarchical_label "I2S_DATA"
+    (shape input)
+    (at 20 90 180)
+    (effects
+      (font
+        (size 1.27 1.27)
+      )
+      (justify right)
+    )
+    (uuid "aaaaaaaa-0003-0006-0000-000000000000")
+  )
+  (hierarchical_label "I2C_SDA"
+    (shape bidirectional)
+    (at 20 100 180)
+    (effects
+      (font
+        (size 1.27 1.27)
+      )
+      (justify right)
+    )
+    (uuid "aaaaaaaa-0003-0007-0000-000000000000")
+  )
+  (hierarchical_label "I2C_SCL"
+    (shape input)
+    (at 20 110 180)
+    (effects
+      (font
+        (size 1.27 1.27)
+      )
+      (justify right)
+    )
+    (uuid "aaaaaaaa-0003-0008-0000-000000000000")
+  )
+  (text "AMPLIFIER SHEET — ZONE C\n\nThis sheet covers the TAS5825M amplifier and output stage.\nAll components are in Zone C (0–70mm W, 35–75mm H) on the PCB.\n\n─── TAS5825M (U2) ────────────────────────────────────────────────\nDevice: Texas Instruments TAS5825M\n  Stereo class-D amplifier with integrated DSP\n  PVDD max: 26.4V (do not exceed)\n  Output: BTL stereo, drives 8Ω per channel\nPackage options:\n  OPTION A: HTSSOP-32 (thermally enhanced, through-hole-friendly probing)\n  OPTION B: VQFN-32 (smaller footprint, better thermal pad area)\n  TBD: final package — see OPEN_DECISIONS.md\n\nPower pins (all must be bypassed):\n  PVDD pins (multiple): connect to PVDD rail\n    Bulk: 2–4 × 100µF low-ESR polymer adjacent to U2\n    HF:   2–4 × 10µF MLCC + 100nF per PVDD pin\n  DVDD (3.3V logic): connect to +3V3 with 100nF bypass\n  VCOM (internal reference): 100nF + 10µF per datasheet\n  GVDD (gate drive): per datasheet bypass\n  All GND pins: multiple vias to L2 GND plane\n\nThermal pad (exposed pad on underside):\n  MANDATORY thermal via array to L4 copper fill\n  Minimum: 9 vias (3×3 grid), 0.3mm drill, 0.5mm pad\n  L4 copper fill must cover full pad area for heat spreading\n  See PCB_CONSTRAINTS.md for thermal via pattern spec\n\nI2S interface (slave mode — clocked by external MCLK):\n  MCLK  ← I2S_MCLK  (24.576 MHz from oscillator via ESP32-S3)\n  BCLK  ← I2S_BCLK  (bit clock)\n  LRCLK ← I2S_LRCLK (word select / frame sync)\n  DIN   ← I2S_DATA  (serial audio data from ESP32-S3)\n  Ratios to verify in firmware:\n    MCLK/LRCLK = 512 at 48kHz → MCLK=24.576MHz, LRCLK=48kHz\n    BCLK/LRCLK = 64 (32-bit frames) → BCLK=3.072MHz\n\nI2C interface (configured by ESP32-S3 at boot):\n  SDA ↔ I2C_SDA (open-drain; 4.7kΩ pull-up to +3V3)\n  SCL ← I2C_SCL  (open-drain; 4.7kΩ pull-up to +3V3)\n  I2C address: determined by ADDR pin — TBD (0x4C or 0x4D)\n  Pull-up placement: close to U2 or ESP32-S3 (confirm bus length)\n\nControl signals:\n  PDN  ← GPIO_AMP_PDN  (power-down, active low, drive from ESP32-S3)\n           Pull-down: 100kΩ to GND to keep amp off at power-up\n  FAULT → GPIO_AMP_FAULT (open-drain output, needs pull-up to +3V3)\n\nBootstrap capacitors:\n  Per datasheet: BST_L, BST_R — 100nF ceramic each\n  Place close to respective BST pins\n\n─── LC OUTPUT FILTER — LEFT CHANNEL ──────────────────────────────\n2nd-order LC BTL filter (one leg per differential output pin)\n\nLeft channel:\n  OUT_L+ → L_OUT_L1 → SPK_L+  (node: FILT_L_P)\n  OUT_L- → L_OUT_L2 → SPK_L-  (node: FILT_L_N)\n  FILT_L_P → C_OUT_L1 → GND\n  FILT_L_N → C_OUT_L2 → GND\n\nInductor values (illustrative — verify per TAS5825M app note):\n  L_OUT_L1, L_OUT_L2: ~3–10µH per leg\n  Requirements: DCR <50mΩ, Isat > peak output current\n  Core: powdered iron or ferrite, low core loss at switching freq\n  Package: SMD shielded recommended for EMI\n\nCapacitor values:\n  C_OUT_L1, C_OUT_L2: ~100–470nF per leg\n  Dielectric: Film or C0G/NP0 — NO X7R in audio filter\n  Voltage: rated well above max differential swing\n  Target f0 = 40–80kHz (verify vs. TAS5825M switching frequency)\n\n─── LC OUTPUT FILTER — RIGHT CHANNEL ─────────────────────────────\nIdentical to left channel (mirror-image layout for symmetry):\n  OUT_R+ → L_OUT_R1 → SPK_R+  (node: FILT_R_P)\n  OUT_R- → L_OUT_R2 → SPK_R-  (node: FILT_R_N)\n  FILT_R_P → C_OUT_R1 → GND\n  FILT_R_N → C_OUT_R2 → GND\n\n─── SPEAKER CONNECTORS ────────────────────────────────────────────\nJ_SPK_L : Left speaker, 2-pin, 5mm pitch screw terminal, board edge\n          Pin 1: SPK_L+ (FILT_L_P after filter)\n          Pin 2: SPK_L- (FILT_L_N after filter)\n          Placement: within 3mm of board edge (bottom edge Zone C)\n\nJ_SPK_R : Right speaker, 2-pin, 5mm pitch screw terminal, board edge\n          Pin 1: SPK_R+ (FILT_R_P after filter)\n          Pin 2: SPK_R- (FILT_R_N after filter)\n          Placement: within 3mm of board edge (bottom edge Zone C)\n\nNetclass for output traces: SPK_OUT (0.8mm track)\nRouting rule: LC filter placed IMMEDIATELY after OUT pins; filter\nis the first thing after amplifier output — NOT after connector.\n\n─── PVDD BULK CAPACITORS (Zone C portion) ────────────────────────\nAlso place PVDD bulk here adjacent to U2 PVDD pins:\n  C_PVDD_BULK1–4: 100µF low-ESR polymer, 35V rating\n  C_PVDD_HF1–4:   10µF MLCC, 35V X7R, 0805/1206\n  C_PVDD_NF1–4:   100nF MLCC, 50V X7R, 0402, per PVDD pin"
+    (at 20 20 0)
+    (effects
+      (font
+        (size 1.5 1.5)
+      )
+      (justify left top)
+    )
+    (uuid "aaaaaaaa-0003-0009-0000-000000000000")
+  )
+  (sheet_instances
+    (path "/bbbbbbbb-0003-0000-0000-000000000000"
+      (page "4")
+    )
+  )
+)
