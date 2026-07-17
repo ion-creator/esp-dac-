@@ -1,0 +1,306 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  esp-dac-  ·  System Architecture — Print-Ready Diagram
+  Format : A4 landscape  (297 mm × 210 mm)
+  ViewBox: 1122 × 794 px  (96 dpi equivalent)
+  Background: white  ·  suitable for colour or greyscale printing
+-->
+<svg xmlns="http://www.w3.org/2000/svg"
+     width="297mm" height="210mm"
+     viewBox="0 0 1122 794">
+
+  <defs>
+    <style>
+      text               { font-family: Arial, Helvetica, sans-serif; }
+      .title             { font-size:16px; font-weight:700; fill:#0f172a; }
+      .subtitle          { font-size:10px; font-weight:400; fill:#64748b; }
+      .blk-title         { font-size:12px; font-weight:700; fill:#0f172a; }
+      .blk-line          { font-size:10px; font-weight:400; fill:#1e293b; }
+      .blk-head          { font-size:10px; font-weight:700; fill:#0f172a; }
+      .bus-label         { font-size:9px;  font-weight:700; fill:#1e40af; }
+      .mclk-label        { font-size:9px;  font-weight:700; fill:#15803d; }
+      .pvdd-label        { font-size:9px;  font-weight:700; fill:#c2410c; }
+      .conn-label        { font-size:9px;  font-weight:600; fill:#334155; }
+      .note              { font-size:8px;  fill:#64748b; }
+      .warn              { font-size:9px;  font-weight:700; fill:#dc2626; }
+      .small-head        { font-size:10px; font-weight:700; fill:#0f172a; }
+    </style>
+
+    <!-- Arrow markers -->
+    <marker id="arr-blk" markerWidth="8" markerHeight="7" refX="7" refY="3.5" orient="auto">
+      <polygon points="0,0 8,3.5 0,7" fill="#111827"/>
+    </marker>
+    <marker id="arr-blu" markerWidth="8" markerHeight="7" refX="7" refY="3.5" orient="auto">
+      <polygon points="0,0 8,3.5 0,7" fill="#1d4ed8"/>
+    </marker>
+    <marker id="arr-grn" markerWidth="8" markerHeight="7" refX="7" refY="3.5" orient="auto">
+      <polygon points="0,0 8,3.5 0,7" fill="#16a34a"/>
+    </marker>
+    <marker id="arr-org" markerWidth="8" markerHeight="7" refX="7" refY="3.5" orient="auto">
+      <polygon points="0,0 8,3.5 0,7" fill="#c2410c"/>
+    </marker>
+    <marker id="arr-pur" markerWidth="8" markerHeight="7" refX="7" refY="3.5" orient="auto">
+      <polygon points="0,0 8,3.5 0,7" fill="#7c3aed"/>
+    </marker>
+  </defs>
+
+  <!-- ══════════════════════ BACKGROUND ══════════════════════ -->
+  <rect x="0" y="0" width="1122" height="794" fill="white"/>
+  <!-- Outer border -->
+  <rect x="8" y="8" width="1106" height="778" fill="none" stroke="#cbd5e1" stroke-width="0.8" rx="2"/>
+
+  <!-- ══════════════════════ TITLE BLOCK ══════════════════════ -->
+  <text x="561" y="26" class="title" text-anchor="middle">esp-dac-  —  System Architecture</text>
+  <text x="561" y="40" class="subtitle" text-anchor="middle">
+    ESP32-S3 + TAS5825M  ·  Compact Stereo Audio Platform  ·  12–24 V Input  ·  100 mm × 75 mm  ·  4-layer PCB  ·  Best-performance at 24 V
+  </text>
+  <line x1="20" y1="47" x2="1102" y2="47" stroke="#e2e8f0" stroke-width="0.8"/>
+
+  <!-- ══════════════════════ POWER CHAIN ══════════════════════ -->
+
+  <!-- VIN -->
+  <rect x="461" y="54" width="200" height="36" fill="#fefce8" stroke="#ca8a04" stroke-width="1.5" rx="4"/>
+  <text x="561" y="69" class="blk-title" text-anchor="middle">VIN  12–24 V DC</text>
+  <text x="561" y="83" class="blk-line" text-anchor="middle">DC barrel jack / screw terminal  (J1)</text>
+
+  <!-- VIN → Protection -->
+  <line x1="561" y1="90" x2="561" y2="104" stroke="#111827" stroke-width="1.5" marker-end="url(#arr-blk)"/>
+
+  <!-- Input Protection -->
+  <rect x="261" y="104" width="600" height="44" fill="#fff7ed" stroke="#d97706" stroke-width="1.5" rx="4"/>
+  <text x="561" y="121" class="blk-title" text-anchor="middle">Input Protection</text>
+  <text x="561" y="139" class="blk-line" text-anchor="middle">
+    Fuse (F1)  ·  Reverse-polarity P-MOSFET (Q1)  ·  TVS Diode (D1)  ·  EMI Common-mode Choke
+  </text>
+
+  <!-- Protection → Buck -->
+  <line x1="561" y1="148" x2="561" y2="162" stroke="#111827" stroke-width="1.5" marker-end="url(#arr-blk)"/>
+
+  <!-- Buck Converter -->
+  <rect x="361" y="162" width="400" height="44" fill="#fff7ed" stroke="#d97706" stroke-width="1.5" rx="4"/>
+  <text x="561" y="179" class="blk-title" text-anchor="middle">Buck Converter  (U3)</text>
+  <text x="561" y="196" class="blk-line" text-anchor="middle">Synchronous · high efficiency · 12–26 V in  →  PVDD rail  +  intermediate rail</text>
+
+  <!-- ══════════════════════ THREE RAIL ARROWS from Buck ══════════════════════ -->
+  <!-- Buck bottom centre at (561, 206) -->
+
+  <!-- → Clock LDO (centre x=142) -->
+  <path d="M 480,206 L 142,224" stroke="#16a34a" stroke-width="1.5" fill="none" marker-end="url(#arr-grn)"/>
+
+  <!-- → 3.3 V LDO (centre x=561) -->
+  <line x1="561" y1="206" x2="561" y2="224" stroke="#2563eb" stroke-width="1.5" marker-end="url(#arr-blu)"/>
+
+  <!-- → PVDD rail (centre x=982) -->
+  <path d="M 642,206 L 982,224" stroke="#c2410c" stroke-width="1.5" fill="none" marker-end="url(#arr-org)"/>
+
+  <!-- ══════════════════════ POWER RAILS ══════════════════════ -->
+
+  <!-- Clock LDO -->
+  <rect x="42" y="224" width="200" height="38" fill="#f0fdf4" stroke="#16a34a" stroke-width="1.5" rx="4"/>
+  <text x="142" y="240" class="blk-title" text-anchor="middle" fill="#166534">Low-noise LDO  (U5)</text>
+  <text x="142" y="255" class="blk-line" text-anchor="middle">VDD_CLK · ultra-low-noise rail</text>
+
+  <!-- 3.3 V LDO -->
+  <rect x="461" y="224" width="200" height="38" fill="#eff6ff" stroke="#2563eb" stroke-width="1.5" rx="4"/>
+  <text x="561" y="240" class="blk-title" text-anchor="middle" fill="#1e3a8a">3.3 V LDO  (U4)</text>
+  <text x="561" y="255" class="blk-line" text-anchor="middle">Digital rail · ESP32-S3 · logic</text>
+
+  <!-- PVDD -->
+  <rect x="882" y="224" width="200" height="38" fill="#fff7ed" stroke="#c2410c" stroke-width="1.5" rx="4"/>
+  <text x="982" y="240" class="blk-title" text-anchor="middle" fill="#9a3412">PVDD  ≈ 24 V</text>
+  <text x="982" y="255" class="blk-line" text-anchor="middle">Audio power rail · TAS5825M stage</text>
+
+  <!-- Rail → chip arrows -->
+  <!-- ClkLDO → TCXO -->
+  <line x1="142" y1="262" x2="142" y2="278" stroke="#16a34a" stroke-width="1.5" marker-end="url(#arr-grn)"/>
+  <!-- 3.3V → ESP32-S3 -->
+  <line x1="561" y1="262" x2="561" y2="278" stroke="#2563eb" stroke-width="1.5" marker-end="url(#arr-blu)"/>
+  <!-- PVDD → TAS5825M -->
+  <line x1="982" y1="262" x2="982" y2="278" stroke="#c2410c" stroke-width="1.5" marker-end="url(#arr-org)"/>
+
+  <!-- Rail labels on arrows -->
+  <text x="156" y="273" class="conn-label" fill="#16a34a">VDD_CLK</text>
+  <text x="565" y="273" class="conn-label" fill="#2563eb">3.3 V</text>
+  <text x="986" y="273" class="conn-label" fill="#c2410c">PVDD</text>
+
+  <!-- ══════════════════════ TCXO / CLOCK DOMAIN ══════════════════════ -->
+
+  <rect x="42" y="278" width="200" height="58" fill="#f0fdf4" stroke="#16a34a" stroke-width="2" rx="5"/>
+  <text x="142" y="296" class="blk-title" text-anchor="middle" fill="#166534">OSC1 — 24.576 MHz TCXO</text>
+  <line x1="47" y1="301" x2="237" y2="301" stroke="#86efac" stroke-width="0.8"/>
+  <text x="142" y="315" class="blk-line" text-anchor="middle">Low-jitter oscillator</text>
+  <text x="142" y="329" class="blk-line" text-anchor="middle">Isolated clock domain · VDD_CLK</text>
+
+  <!-- MCLK from TCXO right-centre → ESP32-S3 left entry -->
+  <line x1="242" y1="307" x2="304" y2="307"
+        stroke="#16a34a" stroke-width="1.5" stroke-dasharray="5 3"
+        marker-end="url(#arr-grn)"/>
+  <text x="273" y="302" class="mclk-label" text-anchor="middle">MCLK</text>
+
+  <!-- MCLK branch from same T-junction to TAS5825M (run at y=270, above chips) -->
+  <!-- Horizontal run from TCXO output (242,307) → up to (242,268) → right to (982,268) → down to TAS top (982,278) -->
+  <polyline points="242,307 242,268 982,268"
+            stroke="#16a34a" stroke-width="1.5" stroke-dasharray="5 3" fill="none"/>
+  <line x1="982" y1="268" x2="982" y2="278"
+        stroke="#16a34a" stroke-width="1.5" stroke-dasharray="5 3"
+        marker-end="url(#arr-grn)"/>
+  <text x="612" y="264" class="mclk-label" text-anchor="middle">MCLK  (24.576 MHz, low-jitter)</text>
+
+  <!-- ══════════════════════ ESP32-S3 ══════════════════════ -->
+
+  <rect x="305" y="278" width="290" height="298" fill="#eff6ff" stroke="#1d4ed8" stroke-width="2" rx="5"/>
+  <text x="450" y="297" class="blk-title" text-anchor="middle" fill="#1e3a8a">ESP32-S3  (U1)</text>
+  <line x1="310" y1="303" x2="590" y2="303" stroke="#93c5fd" stroke-width="1"/>
+
+  <!-- Audio bus -->
+  <text x="313" y="318" class="blk-head">AUDIO BUS:</text>
+  <text x="318" y="332" class="blk-line">→  I²S master: MCLK · BCLK · LRCLK · SDIN</text>
+  <text x="318" y="346" class="blk-line">→  I²C config: SDA · SCL  (to TAS5825M)</text>
+
+  <!-- Storage -->
+  <text x="313" y="364" class="blk-head">STORAGE:</text>
+  <text x="318" y="378" class="blk-line">→  SDIO 4-bit: microSD card  (J3)</text>
+
+  <!-- Connectivity -->
+  <text x="313" y="396" class="blk-head">CONNECTIVITY:</text>
+  <text x="318" y="410" class="blk-line">→  USB-C: firmware flash / OTA  (J2)</text>
+  <text x="318" y="424" class="blk-line">→  UART TX/RX: expansion header  (J4)</text>
+  <text x="318" y="438" class="blk-line">→  I²C / GPIO: expansion header  (J6)</text>
+
+  <!-- UI -->
+  <text x="313" y="456" class="blk-head">USER INTERFACE:</text>
+  <text x="318" y="470" class="blk-line">→  GPIO: 3× Rotary encoder + push  (ENC1–3)</text>
+  <text x="318" y="484" class="blk-line">→  SPI/I²C: Display module  (J5)</text>
+
+  <!-- Clock -->
+  <text x="313" y="502" class="blk-head">CLOCK:</text>
+  <text x="318" y="516" class="blk-line">←  MCLK ext. in from OSC1 (24.576 MHz)</text>
+  <text x="318" y="530" class="blk-line" fill="#64748b" font-style="italic">I2S_CLK_SRC_EXTERNAL · mclk_multiple=384</text>
+
+  <!-- Power note -->
+  <text x="313" y="548" class="blk-head">POWER:  3.3 V ← U4 LDO</text>
+  <text x="318" y="562" class="blk-line" fill="#64748b" font-style="italic">Antenna keep-out zone required (see datasheet)</text>
+
+  <!-- ══════════════════════ I²S / I²C ARROWS ══════════════════════ -->
+
+  <!-- I²S: ESP32-S3 right → TAS5825M left at y=358 -->
+  <line x1="595" y1="358" x2="748" y2="358"
+        stroke="#1d4ed8" stroke-width="2" marker-end="url(#arr-blu)"/>
+  <text x="671" y="351" class="bus-label" text-anchor="middle">I²S master</text>
+  <text x="671" y="364" class="note" text-anchor="middle">MCLK · BCLK · LRCLK · SDIN</text>
+
+  <!-- I²C: ESP32-S3 right → TAS5825M left at y=395 -->
+  <line x1="595" y1="395" x2="748" y2="395"
+        stroke="#1d4ed8" stroke-width="1.5" stroke-dasharray="5 3"
+        marker-end="url(#arr-blu)"/>
+  <text x="671" y="390" class="bus-label" text-anchor="middle">I²C config</text>
+
+  <!-- ══════════════════════ TAS5825M ══════════════════════ -->
+
+  <rect x="750" y="278" width="268" height="208" fill="#faf5ff" stroke="#7c3aed" stroke-width="2" rx="5"/>
+  <text x="884" y="297" class="blk-title" text-anchor="middle" fill="#4c1d95">TAS5825M  (U2)</text>
+  <line x1="755" y1="303" x2="1013" y2="303" stroke="#c4b5fd" stroke-width="1"/>
+
+  <text x="758" y="318" class="blk-head" fill="#4c1d95">INPUT:</text>
+  <text x="763" y="332" class="blk-line">I²S slave · MCLK / BCLK / LRCLK / SDIN</text>
+  <text x="763" y="346" class="blk-line">MCLK direct from OSC1 (24.576 MHz)</text>
+
+  <text x="758" y="364" class="blk-head" fill="#4c1d95">DSP (integrated):</text>
+  <text x="763" y="378" class="blk-line">EQ · Loudness · Limiter · Subsonic filter</text>
+  <text x="763" y="392" class="blk-line">SRC — 48 kHz family native · 44.1 kHz via SRC</text>
+
+  <text x="758" y="410" class="blk-head" fill="#4c1d95">OUTPUT:</text>
+  <text x="763" y="424" class="blk-line">Stereo Class-D  OUT+L / OUT−L</text>
+  <text x="763" y="438" class="blk-line">                OUT+R / OUT−R</text>
+
+  <text x="758" y="456" class="blk-head" fill="#4c1d95">POWER:</text>
+  <text x="763" y="470" class="blk-line">PVDD ≈ 24 V  (max 26.4 V · do not exceed)</text>
+  <text x="763" y="484" class="blk-line" fill="#64748b" font-style="italic">Thermal pad → via array → L4 copper fill</text>
+
+  <!-- TAS5825M → LC Filter arrows -->
+  <!-- Left output at ~x=830 -->
+  <line x1="825" y1="486" x2="825" y2="504" stroke="#7c3aed" stroke-width="1.5" marker-end="url(#arr-pur)"/>
+  <text x="825" y="500" class="note" text-anchor="middle" fill="#7c3aed">OUT L</text>
+  <!-- Right output at ~x=940 -->
+  <line x1="946" y1="486" x2="946" y2="504" stroke="#7c3aed" stroke-width="1.5" marker-end="url(#arr-pur)"/>
+  <text x="946" y="500" class="note" text-anchor="middle" fill="#7c3aed">OUT R</text>
+
+  <!-- ══════════════════════ LC FILTERS ══════════════════════ -->
+
+  <!-- LC Left -->
+  <rect x="766" y="506" width="118" height="44" fill="#fefce8" stroke="#a16207" stroke-width="1.5" rx="4"/>
+  <text x="825" y="523" class="blk-title" text-anchor="middle" font-size="11">LC Filter  Left</text>
+  <text x="825" y="540" class="blk-line" text-anchor="middle">~10 µH + ~1 µF · 8 Ω</text>
+
+  <!-- LC Right -->
+  <rect x="898" y="506" width="118" height="44" fill="#fefce8" stroke="#a16207" stroke-width="1.5" rx="4"/>
+  <text x="957" y="523" class="blk-title" text-anchor="middle" font-size="11">LC Filter  Right</text>
+  <text x="957" y="540" class="blk-line" text-anchor="middle">~10 µH + ~1 µF · 8 Ω</text>
+
+  <!-- LC → Speaker arrows -->
+  <line x1="825" y1="550" x2="825" y2="568" stroke="#111827" stroke-width="1.5" marker-end="url(#arr-blk)"/>
+  <line x1="957" y1="550" x2="957" y2="568" stroke="#111827" stroke-width="1.5" marker-end="url(#arr-blk)"/>
+
+  <!-- ══════════════════════ SPEAKERS ══════════════════════ -->
+
+  <!-- Speaker Left -->
+  <rect x="766" y="568" width="118" height="40" fill="white" stroke="#111827" stroke-width="1.5" rx="4"/>
+  <text x="825" y="585" class="blk-title" text-anchor="middle" font-size="11">8 Ω  Speaker  L</text>
+  <text x="825" y="600" class="blk-line" text-anchor="middle">J_SPK_L · board edge</text>
+
+  <!-- Speaker Right -->
+  <rect x="898" y="568" width="118" height="40" fill="white" stroke="#111827" stroke-width="1.5" rx="4"/>
+  <text x="957" y="585" class="blk-title" text-anchor="middle" font-size="11">8 Ω  Speaker  R</text>
+  <text x="957" y="600" class="blk-line" text-anchor="middle">J_SPK_R · board edge</text>
+
+  <!-- ══════════════════════ PCB STACKUP (left panel) ══════════════════════ -->
+
+  <rect x="42" y="352" width="250" height="194" fill="#f8fafc" stroke="#94a3b8" stroke-width="1.2" rx="4"/>
+  <text x="167" y="370" class="small-head" text-anchor="middle">PCB Stackup  (4-layer)</text>
+  <line x1="47" y1="376" x2="287" y2="376" stroke="#cbd5e1" stroke-width="0.8"/>
+
+  <text x="52" y="392" class="blk-line" font-weight="700">L1 (Top)</text>
+  <text x="120" y="392" class="blk-line">Components · critical signals</text>
+  <text x="52" y="407" class="blk-line" font-weight="700">L2</text>
+  <text x="120" y="407" class="blk-line">Continuous GND plane — no cuts</text>
+  <text x="52" y="422" class="blk-line" font-weight="700">L3</text>
+  <text x="120" y="422" class="blk-line">PVDD + 3.3 V power pours</text>
+  <text x="52" y="437" class="blk-line" font-weight="700">L4 (Bot)</text>
+  <text x="120" y="437" class="blk-line">Signal overflow · thermal fill</text>
+
+  <line x1="47" y1="444" x2="287" y2="444" stroke="#cbd5e1" stroke-width="0.8"/>
+  <text x="52" y="459" class="warn">RULE: L2 must not be cut or split.</text>
+  <text x="52" y="473" class="warn">All return currents flow on L2.</text>
+
+  <line x1="47" y1="480" x2="287" y2="480" stroke="#cbd5e1" stroke-width="0.8"/>
+  <text x="167" y="496" class="blk-line" text-anchor="middle" font-weight="700">Board: 100 mm × 75 mm</text>
+  <text x="167" y="510" class="blk-line" text-anchor="middle">4× M3 mounting holes at corners</text>
+  <text x="167" y="524" class="blk-line" text-anchor="middle" fill="#64748b">Prototype: 5 boards, first spin</text>
+  <text x="167" y="538" class="blk-line" text-anchor="middle" fill="#64748b">Target: 48 kHz / 24-bit stereo</text>
+
+  <!-- ══════════════════════ KEY SIGNAL BUSES TABLE ══════════════════════ -->
+
+  <rect x="42" y="622" width="1038" height="106" fill="#f8fafc" stroke="#94a3b8" stroke-width="1.2" rx="4"/>
+  <text x="561" y="639" class="small-head" text-anchor="middle">Key Signal Buses — Critical Routing Requirements</text>
+  <line x1="47" y1="645" x2="1075" y2="645" stroke="#cbd5e1" stroke-width="0.8"/>
+
+  <!-- Column 1 -->
+  <text x="50" y="659" class="blk-line" font-weight="700">I²S:</text>
+  <text x="88"  y="659" class="blk-line">MCLK · BCLK · LRCLK · SDIN — length matched, L2 reference, away from switching traces</text>
+  <text x="50" y="673" class="blk-line" font-weight="700">I²C:</text>
+  <text x="88"  y="673" class="blk-line">SDA · SCL — short traces, pull-ups near ESP32-S3, not parallel to Class-D output or buck SW node</text>
+  <text x="50" y="687" class="blk-line" font-weight="700">SDIO:</text>
+  <text x="88"  y="687" class="blk-line">CLK · CMD · D0–D3 — length matched, no stubs, direct path ESP32-S3 → microSD, avoid buck SW node</text>
+  <text x="50" y="701" class="blk-line" font-weight="700">USB-C:</text>
+  <text x="88"  y="701" class="blk-line">D+ / D− — 90 Ω differential pair, length matched, ESD protection at connector, L2 reference below</text>
+  <text x="50" y="715" class="blk-line" font-weight="700">MCLK:</text>
+  <text x="88"  y="715" class="blk-line">24.576 MHz — &lt; 20 mm trace, L1 routing, solid L2 below, no parallel switching edges, 45° bends only</text>
+
+  <!-- ══════════════════════ FOOTER ══════════════════════ -->
+  <line x1="20" y1="734" x2="1102" y2="734" stroke="#e2e8f0" stroke-width="0.8"/>
+  <text x="28" y="746" class="note">
+    esp-dac-  ·  System Architecture — Print Diagram  ·  ESP32-S3 + TAS5825M  ·  4-layer Stereo Audio Platform  ·  Prototype Phase
+  </text>
+  <text x="1094" y="746" class="note" text-anchor="end">docs/architecture-print.svg</text>
+
+</svg>
